@@ -97,7 +97,7 @@ public class SpotlightView extends FrameLayout {
     /**
      * Intro Animation Duration
      */
-    private long introAnimationDuration = 1000;
+    private long introAnimationDuration = 300;
 
     /**
      * Toggel between reveal and fadein animation
@@ -361,7 +361,7 @@ public class SpotlightView extends FrameLayout {
                                 @Override
                                 public void run() {
 
-                                    startFadinAnimation(activity);
+                                    startFadeInAnimation(activity);
                                     setupCloseButton(activity);
 
                                 }
@@ -424,7 +424,7 @@ public class SpotlightView extends FrameLayout {
      */
     private void dismiss() {
         preferencesManager.setDisplayed(usageId);
-        startFadeout();
+        startFadeOutAnimation();
     }
 
 
@@ -510,11 +510,11 @@ public class SpotlightView extends FrameLayout {
         anim.start();
     }
 
-    private void startFadinAnimation(final Activity activity) {
+    private void startFadeInAnimation(final Activity activity) {
 
         setVisibility(VISIBLE);
         Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
-        fadeIn.setDuration(introAnimationDuration);
+        fadeIn.setDuration(300);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -540,9 +540,9 @@ public class SpotlightView extends FrameLayout {
         startAnimation(fadeIn);
     }
 
-    private void startFadeout() {
+    private void startFadeOutAnimation() {
         Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
-        fadeIn.setDuration(introAnimationDuration);
+        fadeIn.setDuration(300);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
