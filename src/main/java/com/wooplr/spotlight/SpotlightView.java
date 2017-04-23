@@ -348,7 +348,7 @@ public class SpotlightView extends FrameLayout {
      *
      * @param activity
      */
-    private void show(final Activity activity) {
+    public void show(final Activity activity) {
 
         if (preferencesManager.isDisplayed(usageId))
             return;
@@ -1204,6 +1204,12 @@ public class SpotlightView extends FrameLayout {
 
         public Builder lineStroke(int stroke) {
             spotlightView.setLineStroke(Utils.dpToPx(stroke));
+            return this;
+        }
+        
+        public Builder(Activity activity) {
+
+            
             return this;
         }
 
