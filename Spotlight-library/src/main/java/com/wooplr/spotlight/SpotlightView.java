@@ -56,36 +56,8 @@ import java.util.List;
 
 public class SpotlightView extends FrameLayout {
 
-    public class ButtonSettings{
 
-        public int size = 50;
-        public int marginTop = 20;
-        public int marginEnd = 10;
-        public Drawable image = null;
-        public int backgroundInt = R.drawable.btn_close_selector;
-
-        public ButtonSettings(int size,int marginTop,int marginEnd){
-
-            this.size = size;
-            this.marginEnd = marginEnd;
-            this.marginTop = marginTop;
-        }
-
-        public ButtonSettings(int size,int marginTop,int marginEnd,Drawable image){
-
-            this.size = size;
-            this.marginEnd = marginEnd;
-            this.marginTop = marginTop;
-            this.image = image;
-        }
-
-        public ButtonSettings(){}
-
-
-
-    }
-
-    public  ButtonSettings closeButtonSettings = new ButtonSettings();
+    public  CloseButtonConfig closeButtonSettings = new CloseButtonConfig();
 
 
 
@@ -1216,6 +1188,13 @@ public class SpotlightView extends FrameLayout {
             spotlightView.setConfiguration(configuration);
             return this;
         }
+
+        public Builder setCloseButtonSettings(int size,int margin_top,int margin_end,Drawable d){
+
+            spotlightView.closeButtonSettings = new CloseButtonConfig(size,margin_top,margin_end,d);
+            return this;
+        }
+
 
         public SpotlightView build() {
 
