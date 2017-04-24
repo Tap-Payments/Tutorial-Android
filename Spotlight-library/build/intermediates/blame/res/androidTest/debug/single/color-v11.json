@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/Morgot/code/Tutorilas/Spotlight-library/build/intermediates/res/merged/androidTest/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/Morgot/.android/build-cache/b7065ed22019c5e73465cecb533a04779603dc6b/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorilas/Spotlight-library/build/intermediates/res/merged/androidTest/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/Morgot/.android/build-cache/b7065ed22019c5e73465cecb533a04779603dc6b/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    }
+]
