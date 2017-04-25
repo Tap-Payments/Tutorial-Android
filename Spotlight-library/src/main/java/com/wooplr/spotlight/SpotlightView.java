@@ -758,7 +758,7 @@ public class SpotlightView extends FrameLayout {
                 endPX = startPX  - shiftValue;
                 endPY = midlePY;
 
-                if(startPX > screenWidth && startPX < 0){
+                if(startPX > screenWidth || startPX < 0){
 
                     startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
                     startPY = targetView.getViewTop() - shiftValue;
@@ -811,7 +811,7 @@ public class SpotlightView extends FrameLayout {
                 endPY = midlePY;
 
 
-                if(startPX > screenWidth && startPX < 0){
+                if(startPX > screenWidth || startPX < 0){
 
                     startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
                     startPY = targetView.getViewTop() - shiftValue;
@@ -866,7 +866,7 @@ public class SpotlightView extends FrameLayout {
                 endPX = midlePX ;
                 endPY = startPY + shiftValue;
 
-                if(startPX > screenWidth && startPX < 0){
+                if(startPX > screenWidth || startPX < 0){
 
                     startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
                     startPY = targetView.getViewBottom() + shiftValue;
@@ -929,7 +929,7 @@ public class SpotlightView extends FrameLayout {
                 endPX = midlePX ;
                 endPY = startPY + shiftValue;
 
-                if(startPX > screenWidth && startPX < 0){
+                if(startPX > screenWidth || startPX < 0){
 
                     startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
                     startPY = targetView.getViewBottom() + shiftValue;
