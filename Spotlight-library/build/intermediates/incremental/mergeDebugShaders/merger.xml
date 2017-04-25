@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/Morgot/code/Tutorial-Android/Spotlight-library/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/Morgot/code/Tutorial-Android/Spotlight-library/src/debug/shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/Morgot/code/Tutorilas/Spotlight-library/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/Morgot/code/Tutorilas/Spotlight-library/src/debug/shaders"/></dataSet></merger>

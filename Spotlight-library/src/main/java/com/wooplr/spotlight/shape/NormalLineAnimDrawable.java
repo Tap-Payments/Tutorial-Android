@@ -35,7 +35,8 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
     private DisplayMode curDisplayMode = DisplayMode.Appear;
     private long lineAnimDuration = 400;
     private int lineColor = Color.parseColor("#eb273f");
-    private int lineStroke = 8;
+    public static int lineStroke = 8;
+    public static int arrowSize = 25;
 
     private Animator.AnimatorListener mListner;
 
@@ -55,7 +56,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeJoin(Paint.Join.ROUND);
         p.setStrokeCap(Paint.Cap.ROUND);
-        p.setStrokeWidth(1);
+        p.setStrokeWidth(lineStroke);
         p.setColor(lineColor);
         return p;
     }
@@ -172,7 +173,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
     }
 
 
-    int arrowSize = 25;
+
 
 
     @Override
@@ -190,10 +191,10 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
                 canvas.drawPath(mPath2, mPaint2);
             } else if (curDisplayMode == DisplayMode.Appear) {
 
-                mPaint2.setStrokeWidth(3);
+                mPaint2.setStrokeWidth(lineStroke);
 
                 float midleX  = getPoints().get(0).getMoveX();
-                float midleY  = getPoints().get(0).getMoveY() + 100;
+                float midleY  = getPoints().get(0).getMoveY();
 
 
 
@@ -201,10 +202,6 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
                 mPath2.moveTo(moveX, moveY);
                 mPath2.cubicTo(moveX, moveY,midleX,midleY,curX, curY);
 
-                float arrowLeftX = 0 ,arrowLeftY = 0;
-                float arrowRightX = 0 ,arrowRightY = 0;
-
-                float shiftValue = 5;
 
 
                 Quarter q = Quarter.rightTop;
