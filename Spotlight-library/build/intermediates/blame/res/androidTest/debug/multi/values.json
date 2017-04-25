@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/Morgot/code/Tutorilas/Spotlight-library/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "outputFile": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
         "map": [
             {
                 "to": {
@@ -3659,7 +3659,7 @@
                     "endOffset": 32874
                 },
                 "from": {
-                    "file": "/Users/Morgot/code/Tutorilas/Spotlight-library/build/intermediates/bundles/debug/res/values/values.xml",
+                    "file": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/bundles/debug/res/values/values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

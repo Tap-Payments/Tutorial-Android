@@ -703,6 +703,7 @@ public class SpotlightView extends FrameLayout {
     }
 
 
+    private int shiftValue = Utils.dpToPx(24);
 
 
     private void enableDismissOnBackPress() {
@@ -738,7 +739,6 @@ public class SpotlightView extends FrameLayout {
         }
 
 
-        int shiftValue =  Utils.dpToPx(24);
 
         float startPX = 0,startPY = 0,midlePX = 0,midlePY = 0,endPX = 0,endPY = 0;
 
@@ -757,6 +757,21 @@ public class SpotlightView extends FrameLayout {
 
                 endPX = startPX  - shiftValue;
                 endPY = midlePY;
+
+                if(startPX > screenWidth && startPX < 0){
+
+                    startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
+                    startPY = targetView.getViewTop() - shiftValue;
+
+                    midlePX = startPX ;
+                    midlePY =  startPY - shiftValue*2;
+
+                    endPX = midlePX - shiftValue;
+                    endPY = midlePY;
+
+
+                }
+
 
                 animPoints.add(new AnimPoint(startPX,
                         startPY,
@@ -795,6 +810,21 @@ public class SpotlightView extends FrameLayout {
                 endPX = startPX  + shiftValue;
                 endPY = midlePY;
 
+
+                if(startPX > screenWidth && startPX < 0){
+
+                    startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
+                    startPY = targetView.getViewTop() - shiftValue;
+
+                    midlePX = startPX ;
+                    midlePY =  startPY - shiftValue*2;
+
+                    endPX = midlePX - shiftValue;
+                    endPY = midlePY;
+
+
+                }
+
                 animPoints.add(new AnimPoint(startPX,
                         startPY,
                         midlePX,
@@ -827,14 +857,28 @@ public class SpotlightView extends FrameLayout {
         } else {//top
             if (targetView.getPoint().x > screenWidth / 2) {//Right
 
-                startPX = (targetView.getViewLeft()) - extraPaddingForArc - arrowMargin;
-                startPY =  targetView.getPoint().y/2  +radius ;
+                startPX = (targetView.getViewLeft()) - extraPaddingForArc - arrowMargin - radius;
+                startPY =  getMiddleOfViewY() ;
 
                 midlePX = startPX - shiftValue*2;
                 midlePY =  startPY;
 
                 endPX = midlePX ;
                 endPY = startPY + shiftValue;
+
+                if(startPX > screenWidth && startPX < 0){
+
+                    startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
+                    startPY = targetView.getViewBottom() + shiftValue;
+
+                    midlePX = startPX ;
+                    midlePY =  startPY + shiftValue*2;
+
+                    endPX = midlePX + shiftValue;
+                    endPY = midlePY;
+
+
+                }
 
                 animPoints.add(new AnimPoint(startPX,
                         startPY,
@@ -873,14 +917,32 @@ public class SpotlightView extends FrameLayout {
 
 
 
-                startPX = (targetView.getViewRight()) + extraPaddingForArc + arrowMargin;
-                startPY =  targetView.getPoint().y/2  +radius ;
+                startPX = (targetView.getViewRight()) + extraPaddingForArc + arrowMargin + radius;
+                startPY =  getMiddleOfViewY()  ;
+
+
+
 
                 midlePX = startPX + shiftValue*2;
                 midlePY =  startPY;
 
                 endPX = midlePX ;
                 endPY = startPY + shiftValue;
+
+                if(startPX > screenWidth && startPX < 0){
+
+                    startPX = targetView.getViewWidth()/2 + targetView.getViewLeft();
+                    startPY = targetView.getViewBottom() + shiftValue;
+
+                    midlePX = startPX ;
+                    midlePY =  startPY + shiftValue*2;
+
+                    endPX = midlePX + shiftValue;
+                    endPY = midlePY;
+
+
+                }
+
 
                 animPoints.add(new AnimPoint(startPX,
                         startPY,
@@ -923,6 +985,18 @@ public class SpotlightView extends FrameLayout {
         }
 
         return animPoints;
+    }
+
+
+    private float getMiddleOfViewY(){
+
+        float res = (targetView.getViewBottom() - targetView.getViewTop());
+
+        res /= 2;
+
+
+
+        return res + targetView.getViewTop();
     }
 
     /**
@@ -1269,6 +1343,13 @@ public class SpotlightView extends FrameLayout {
             spotlightView.arrowSize = arrowSize;
             return this;
         }
+
+        public Builder setLineSize(int linesize){
+
+            spotlightView.shiftValue = linesize;
+            return this;
+        }
+
 
         public SpotlightView build() {
 
