@@ -8,6 +8,7 @@ import android.graphics.RectF;
 
 
 import com.wooplr.spotlight.target.Target;
+import com.wooplr.spotlight.utils.Utils;
 
 /**
  * Created by jitender on 10/06/16.
@@ -41,7 +42,7 @@ public class Circle {
             canvas.drawCircle(circlePoint.x, circlePoint.y, radius, eraser);
         }else{
             RectF rectF = new RectF(this.target.getRect().left, this.target.getRect().top, this.target.getRect().right, this.target.getRect().bottom);
-            canvas.drawRoundRect(rectF, 52, 52, eraser);
+            canvas.drawRoundRect(rectF, Utils.dpToPx(40), Utils.dpToPx(40), eraser);
         }
 
     }

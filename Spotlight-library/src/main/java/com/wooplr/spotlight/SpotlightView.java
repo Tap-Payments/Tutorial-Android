@@ -49,6 +49,7 @@ import com.wooplr.spotlight.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by jitender on 10/06/16.
@@ -196,6 +197,8 @@ public class SpotlightView extends FrameLayout {
     private int arrowSize = 25;
 
     private int arrowMargin = 10;
+
+    boolean isElementCLick = true;
 
 
     public SpotlightView(Context context) {
@@ -349,7 +352,7 @@ public class SpotlightView extends FrameLayout {
 
     private void setupCloseButton(final Activity activity){
 
-        Button exit = new Button(activity);
+        final Button exit = new Button(activity);
 
 
 
@@ -367,12 +370,15 @@ public class SpotlightView extends FrameLayout {
 
         FrameLayout.LayoutParams lp = new LayoutParams(getDpFromPx(closeButtonSettings.size), getDpFromPx(closeButtonSettings.size));
         lp.setMargins(0,getDpFromPx(closeButtonSettings.marginTop),0,0);
-        lp.setMarginEnd(getDpFromPx(closeButtonSettings.marginTop));
+        lp.setMarginEnd(getDpFromPx(closeButtonSettings.marginEnd));
+        lp.setMarginStart(getDpFromPx(closeButtonSettings.marginStart));
         lp.gravity = (Gravity.TOP|(isStart?Gravity.START:Gravity.END));
 
         exit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                exit.setEnabled(false);
+                isElementCLick = false;
                 dismiss();
             }
         });
@@ -471,7 +477,7 @@ public class SpotlightView extends FrameLayout {
             @Override
             public void onAnimationEnd(Animator animator) {
                 setVisibility(GONE);
-                removeSpotlightView(false);
+                removeSpotlightView(isElementCLick);
 
             }
 
@@ -532,7 +538,7 @@ public class SpotlightView extends FrameLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 setVisibility(GONE);
-                removeSpotlightView(true);
+                removeSpotlightView(isElementCLick);
             }
 
             @Override
@@ -983,6 +989,9 @@ public class SpotlightView extends FrameLayout {
                 animPoints.get(0).curX +=100;
             }
         }
+        Locale l =  getResources().getConfiguration().locale;
+
+        headingTv.setTextDirection(l.toString().contains("ar")?TEXT_DIRECTION_RTL:TEXT_DIRECTION_LTR);
 
         return animPoints;
     }
@@ -1331,9 +1340,9 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
 
-        public Builder setCloseButtonSettings(int size,int margin_top,int margin_end,Drawable d){
+        public Builder setCloseButtonSettings(int size,int margin_top,int margin_end,int margin_start,Drawable d){
 
-            spotlightView.closeButtonSettings = new CloseButtonConfig(size,margin_top,margin_end,d);
+            spotlightView.closeButtonSettings = new CloseButtonConfig(size,margin_top,margin_end,margin_start,d);
             return this;
         }
 
