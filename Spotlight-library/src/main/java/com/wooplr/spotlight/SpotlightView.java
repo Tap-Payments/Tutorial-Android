@@ -41,7 +41,7 @@ import android.widget.TextView;
 import com.wooplr.spotlight.prefs.PreferencesManager;
 import com.wooplr.spotlight.shape.Circle;
 import com.wooplr.spotlight.shape.NormalLineAnimDrawable;
-import com.wooplr.spotlight.target.AnimPoint;
+import com.wooplr.spotlight.target.SpotAnimPoint;
 import com.wooplr.spotlight.target.Target;
 import com.wooplr.spotlight.target.ViewTarget;
 import com.wooplr.spotlight.utils.SpotlightListener;
@@ -729,13 +729,13 @@ public class SpotlightView extends FrameLayout {
         requestFocus();
     }
 
-    private List<AnimPoint> checkLinePoint() {
+    private List<SpotAnimPoint> checkLinePoint() {
 
         //Screen Height
         int screenWidth = getWidth();
         int screenHeight = getHeight();
 
-        List<AnimPoint> animPoints = new ArrayList<>();
+        List<SpotAnimPoint> spotAnimPoints = new ArrayList<>();
 
         //For TextViews
         LayoutParams headingParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -790,13 +790,13 @@ public class SpotlightView extends FrameLayout {
                 }
 
 
-                animPoints.add(new AnimPoint(startPX,
+                spotAnimPoints.add(new SpotAnimPoint(startPX,
                         startPY,
                         midlePX,
                         midlePY
 
                 ));
-                animPoints.add(new AnimPoint(midlePX,
+                spotAnimPoints.add(new SpotAnimPoint(midlePX,
                        midlePY,
                        endPX,
                          endPY));
@@ -842,13 +842,13 @@ public class SpotlightView extends FrameLayout {
 
                 }
 
-                animPoints.add(new AnimPoint(startPX,
+                spotAnimPoints.add(new SpotAnimPoint(startPX,
                         startPY,
                         midlePX,
                         midlePY
 
                 ));
-                animPoints.add(new AnimPoint(midlePX,
+                spotAnimPoints.add(new SpotAnimPoint(midlePX,
                         midlePY,
                         endPX,
                         endPY));
@@ -897,13 +897,13 @@ public class SpotlightView extends FrameLayout {
 
                 }
 
-                animPoints.add(new AnimPoint(startPX,
+                spotAnimPoints.add(new SpotAnimPoint(startPX,
                         startPY,
                         midlePX,
                         midlePY
 
                 ));
-                animPoints.add(new AnimPoint(midlePX,
+                spotAnimPoints.add(new SpotAnimPoint(midlePX,
                         midlePY,
                         endPX,
                         endPY));
@@ -961,13 +961,13 @@ public class SpotlightView extends FrameLayout {
                 }
 
 
-                animPoints.add(new AnimPoint(startPX,
+                spotAnimPoints.add(new SpotAnimPoint(startPX,
                         startPY,
                         midlePX,
                         midlePY
 
                 ));
-                animPoints.add(new AnimPoint(midlePX,
+                spotAnimPoints.add(new SpotAnimPoint(midlePX,
                         midlePY,
                         endPX,
                         endPY));
@@ -993,18 +993,18 @@ public class SpotlightView extends FrameLayout {
         addView(headingTv, headingParams);
         addView(subHeadingTv, subHeadingParams);
         if(viewsForTargets.size()>1&&circles.get(0).isCircle){
-            animPoints.remove(0);
+            spotAnimPoints.remove(0);
             if (targetView.getPoint().x > screenWidth / 2){
-                animPoints.get(0).curX -=100;
+                spotAnimPoints.get(0).curX -=100;
             }else{
-                animPoints.get(0).curX +=100;
+                spotAnimPoints.get(0).curX +=100;
             }
         }
         Locale l =  getResources().getConfiguration().locale;
 
         headingTv.setTextDirection(l.toString().contains("ar")?TEXT_DIRECTION_RTL:TEXT_DIRECTION_LTR);
 
-        return animPoints;
+        return spotAnimPoints;
     }
 
 

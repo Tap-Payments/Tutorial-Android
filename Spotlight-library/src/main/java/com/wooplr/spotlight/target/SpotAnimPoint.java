@@ -3,20 +3,20 @@ package com.wooplr.spotlight.target;
 /**
  * Adapted from github.com/dupengtao/LineAnimation
  */
-public class AnimPoint {
+public class SpotAnimPoint {
     public float curX;
     private float curY;
     public float moveX;
     private float moveY;
 
-    public AnimPoint(float curX, float curY, float moveX, float moveY) {
+    public SpotAnimPoint(float curX, float curY, float moveX, float moveY) {
         this.curX = curX;
         this.curY = curY;
         this.moveX = moveX;
         this.moveY = moveY;
     }
 
-    public AnimPoint() {
+    public SpotAnimPoint() {
     }
 
     public float getCurX() {

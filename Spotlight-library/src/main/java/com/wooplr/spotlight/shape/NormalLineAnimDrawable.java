@@ -13,7 +13,7 @@ import android.graphics.PathMeasure;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
-import com.wooplr.spotlight.target.AnimPoint;
+import com.wooplr.spotlight.target.SpotAnimPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
     private final Path mPath2;
     private final Paint mPaint2;
     private float factorY, factorX;
-    private AnimPoint curAnimPoint = null;
+    private SpotAnimPoint curSpotAnimPoint = null;
     private int moveTimes;
-    private List<AnimPoint> mAnimPoints = new ArrayList<AnimPoint>();
+    private List<SpotAnimPoint> mSpotAnimPoints = new ArrayList<SpotAnimPoint>();
     private ObjectAnimator mLineAnim;
     private DisplayMode curDisplayMode = DisplayMode.Appear;
     private long lineAnimDuration = 400;
@@ -69,7 +69,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         ObjectAnimator lineAnim = ObjectAnimator.ofPropertyValuesHolder(
                 this, pvMoveY, pvMoveX).setDuration(lineAnimDuration);
         lineAnim.setRepeatMode(ValueAnimator.RESTART);
-        lineAnim.setRepeatCount(mAnimPoints.size() - 1);
+        lineAnim.setRepeatCount(mSpotAnimPoints.size() - 1);
         lineAnim.addUpdateListener(this);
         if (android.os.Build.VERSION.SDK_INT > 17) {
             lineAnim.setAutoCancel(true);
@@ -78,7 +78,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
             @Override
             public void onAnimationStart(Animator animation) {
                 moveTimes = 0;
-                curAnimPoint = mAnimPoints.get(moveTimes);
+                curSpotAnimPoint = mSpotAnimPoints.get(moveTimes);
                 if (mListner != null)
                     mListner.onAnimationStart(animation);
             }
@@ -98,7 +98,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
             @Override
             public void onAnimationRepeat(Animator animation) {
                 moveTimes++;
-                curAnimPoint = mAnimPoints.get(moveTimes);
+                curSpotAnimPoint = mSpotAnimPoints.get(moveTimes);
                 if (mListner != null)
                     mListner.onAnimationRepeat(animation);
             }
@@ -112,9 +112,9 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         this.mListner = mListner;
     }
 
-    public void playAnim(List<AnimPoint> animPoints) {
-        if (animPoints != null) {
-            mAnimPoints = animPoints;
+    public void playAnim(List<SpotAnimPoint> spotAnimPoints) {
+        if (spotAnimPoints != null) {
+            mSpotAnimPoints = spotAnimPoints;
         }
         if (mLineAnim == null) {
             mLineAnim = getLineAnim();
@@ -152,13 +152,13 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         invalidateSelf();
     }
 
-    private void drawLine(List<AnimPoint> animPoints, int num) {
-        drawLine(animPoints, num, animPoints.size());
+    private void drawLine(List<SpotAnimPoint> spotAnimPoints, int num) {
+        drawLine(spotAnimPoints, num, spotAnimPoints.size());
     }
 
-    private void drawLine(List<AnimPoint> animPoints, int num, int size) {
+    private void drawLine(List<SpotAnimPoint> spotAnimPoints, int num, int size) {
         for (int i = num, j = size; i < j; i++) {
-            AnimPoint p = animPoints.get(i);
+            SpotAnimPoint p = spotAnimPoints.get(i);
             mPath2.moveTo(p.getCurX(), p.getCurY());
             mPath2.lineTo(p.getMoveX(), p.getMoveY());
         }
@@ -178,7 +178,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
     @Override
     public void draw(Canvas canvas) {
-        if (curAnimPoint != null) {
+        if (curSpotAnimPoint != null) {
             mPath2.rewind();
             float curX = getPoints().get(0).getCurX();
             float curY = getPoints().get(0).getCurY();
@@ -187,7 +187,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
             if (curDisplayMode == DisplayMode.Disappear) {
                 mPath2.moveTo(curX == moveX ? moveX : curX + ((moveX - curX) * factorX), curY == moveY ? moveY : curY + ((moveY - curY) * factorY));
                 mPath2.lineTo(moveX, moveY);
-                drawLine(mAnimPoints, moveTimes + 1);
+                drawLine(mSpotAnimPoints, moveTimes + 1);
                 canvas.drawPath(mPath2, mPaint2);
             } else if (curDisplayMode == DisplayMode.Appear) {
 
@@ -469,12 +469,12 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         return 0;
     }
 
-    public List<AnimPoint> getPoints() {
-        return mAnimPoints;
+    public List<SpotAnimPoint> getPoints() {
+        return mSpotAnimPoints;
     }
 
-    public void setPoints(List<AnimPoint> animPoints) {
-        mAnimPoints = animPoints;
+    public void setPoints(List<SpotAnimPoint> spotAnimPoints) {
+        mSpotAnimPoints = spotAnimPoints;
     }
 
     public void setLineAnimDuration(long lineAnimDuration) {
