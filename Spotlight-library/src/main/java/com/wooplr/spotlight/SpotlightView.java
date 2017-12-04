@@ -61,7 +61,10 @@ public class SpotlightView extends FrameLayout {
 
     public  CloseButtonConfig closeButtonSettings = new CloseButtonConfig();
 
-
+    /**
+     * isArabic (invesed position)
+     */
+    private boolean isArabic = false;
     /**
      * OverLay color
      */
@@ -162,7 +165,7 @@ public class SpotlightView extends FrameLayout {
     /**
      * Extra padding around the arc
      */
-    private int extraPaddingForArc = 24;
+    private int extraPaddingForArc = 40;
 
     /**
      * Defaults for heading TextView
@@ -372,7 +375,15 @@ public class SpotlightView extends FrameLayout {
         lp.setMargins(0,getDpFromPx(closeButtonSettings.marginTop),0,0);
         lp.setMarginEnd(getDpFromPx(closeButtonSettings.marginEnd));
         lp.setMarginStart(getDpFromPx(closeButtonSettings.marginStart));
-        lp.gravity = (Gravity.TOP|(isStart?Gravity.START:Gravity.END));
+        int position = Gravity.START;
+        if (isStart&&isArabic){
+
+            position = Gravity.END;
+        }else if (!isStart&&!isArabic){
+
+            position = Gravity.END;
+        }
+        lp.gravity = (Gravity.TOP|position);
 
         exit.setOnClickListener(new OnClickListener() {
             @Override
@@ -709,7 +720,7 @@ public class SpotlightView extends FrameLayout {
     }
 
 
-    private int shiftValue = Utils.dpToPx(24);
+    private int shiftValue = Utils.dpToPx(40);
 
 
     private void enableDismissOnBackPress() {
@@ -736,7 +747,7 @@ public class SpotlightView extends FrameLayout {
         int spaceAboveLine = Utils.dpToPx(8);
         int spaceBelowLine = Utils.dpToPx(12);
 
-        int extramargin = Utils.dpToPx(16);
+        int extramargin = Utils.dpToPx(8);
 
         float radius = circleShape.getRadius();
         if (!isCircleTargetView){
@@ -755,13 +766,13 @@ public class SpotlightView extends FrameLayout {
         if (targetView.getPoint().y > screenHeight / 2) {//Down TODO: add a logic for by 2
             if (targetView.getPoint().x > screenWidth / 2) {//Right
 
-                startPX = (targetView.getViewRight() - targetView.getViewWidth() / 2) ;
-                startPY = targetView.getPoint().y - (radius + extraPaddingForArc) - arrowMargin;
+                startPX = (targetView.getViewRight() - targetView.getViewWidth() / 2);
+                startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
 
                 midlePX = startPX ;
-                midlePY =  startPY - shiftValue*3;
+                midlePY =  startPY - (int)(shiftValue*4);
 
-                endPX = startPX  - shiftValue;
+                endPX = startPX  - (int)(shiftValue*1.5);
                 endPY = midlePY;
 
                 if(startPX > screenWidth || startPX < 0){
@@ -792,7 +803,7 @@ public class SpotlightView extends FrameLayout {
                 //TextViews
                 headingParams.leftMargin = gutter;
                 headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
-                headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
+                headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine  ;
                 headingParams.topMargin = extramargin;
                 headingParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
                 headingTv.setGravity(Gravity.LEFT);
@@ -808,12 +819,12 @@ public class SpotlightView extends FrameLayout {
             } else {//left
 
                 startPX = (targetView.getViewRight() - targetView.getViewWidth() / 2) ;
-                startPY = targetView.getPoint().y - (radius + extraPaddingForArc) - arrowMargin;
+                startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
 
                 midlePX = startPX ;
-                midlePY =  startPY - shiftValue*3;
+                midlePY =  startPY - shiftValue*4;
 
-                endPX = startPX  + shiftValue;
+                endPX = startPX  + (int)(shiftValue*1.5);
                 endPY = midlePY;
 
 
@@ -864,13 +875,13 @@ public class SpotlightView extends FrameLayout {
             if (targetView.getPoint().x > screenWidth / 2) {//Right
 
                 startPX = (targetView.getViewLeft()) - extraPaddingForArc - arrowMargin - radius;
-                startPY =  getMiddleOfViewY() ;
+                startPY = getMiddleOfViewY();
 
-                midlePX = startPX - shiftValue*2;
+                midlePX = startPX - shiftValue*3;
                 midlePY =  startPY;
 
                 endPX = midlePX ;
-                endPY = startPY + shiftValue;
+                endPY = startPY + (int)(1.5*shiftValue);
 
                 if(startPX > screenWidth || startPX < 0){
 
@@ -924,16 +935,16 @@ public class SpotlightView extends FrameLayout {
 
 
                 startPX = (targetView.getViewRight()) + extraPaddingForArc + arrowMargin + radius;
-                startPY =  getMiddleOfViewY()  ;
+                startPY = getMiddleOfViewY() ;
 
 
 
 
-                midlePX = startPX + shiftValue*2;
+                midlePX = startPX + shiftValue*3;
                 midlePY =  startPY;
 
                 endPX = midlePX ;
-                endPY = startPY + shiftValue;
+                endPY = startPY + (int)(1.5*shiftValue);
 
                 if(startPX > screenWidth || startPX < 0){
 
@@ -1320,7 +1331,7 @@ public class SpotlightView extends FrameLayout {
 
         public Builder setArrowMarginStart(int start){
 
-            spotlightView.arrowMargin = start;
+            spotlightView.arrowMargin = Utils.dpToPx(start);
             return this;
         }
 
@@ -1356,6 +1367,12 @@ public class SpotlightView extends FrameLayout {
         public Builder setLineSize(int linesize){
 
             spotlightView.shiftValue = linesize;
+            return this;
+        }
+
+        public Builder setArabic(boolean isArabic){
+
+            spotlightView.isArabic = isArabic;
             return this;
         }
 

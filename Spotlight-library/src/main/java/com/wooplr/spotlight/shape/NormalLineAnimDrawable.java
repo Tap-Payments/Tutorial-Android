@@ -35,8 +35,8 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
     private DisplayMode curDisplayMode = DisplayMode.Appear;
     private long lineAnimDuration = 400;
     private int lineColor = Color.parseColor("#eb273f");
-    public static int lineStroke = 8;
-    public static int arrowSize = 25;
+    public static int lineStroke = 4;
+    public static int arrowSize = 50;
 
     private Animator.AnimatorListener mListner;
 
@@ -290,7 +290,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
     void drawArrowPath(Quarter quarter,Direction direction,float startX,float startY){
 
-        float leftAttowPartX = 0;
+        float leftArrowPartX = 0;
         float leftArrowPartY = 0;
         float rightArrowPartX = 0;
         float rightArrowPartY = 0;
@@ -301,14 +301,14 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
                 if(direction == Direction.bottom){
 
-                    leftAttowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - arrowSize;
                     leftArrowPartY = startY + arrowSize;
 
                     rightArrowPartX = startX + arrowSize;
                     rightArrowPartY = startY + arrowSize;
                 }else if (direction == Direction.side){
 
-                    leftAttowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - arrowSize;
                     leftArrowPartY = startY - arrowSize;
 
                     rightArrowPartX = startX - arrowSize;
@@ -322,14 +322,14 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
                 if(direction == Direction.bottom){
 
-                    leftAttowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - arrowSize;
                     leftArrowPartY = startY + arrowSize;
 
                     rightArrowPartX = startX + arrowSize;
                     rightArrowPartY = startY + arrowSize;
                 }else if (direction == Direction.side){
 
-                    leftAttowPartX = startX + arrowSize;
+                    leftArrowPartX = startX + arrowSize;
                     leftArrowPartY = startY - arrowSize;
 
                     rightArrowPartX = startX + arrowSize;
@@ -343,14 +343,14 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
                 if(direction == Direction.top){
 
-                    leftAttowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - arrowSize;
                     leftArrowPartY = startY - arrowSize;
 
                     rightArrowPartX = startX + arrowSize;
                     rightArrowPartY = startY - arrowSize;
                 }else if (direction == Direction.side){
 
-                    leftAttowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - arrowSize;
                     leftArrowPartY = startY - arrowSize;
 
                     rightArrowPartX = startX - arrowSize;
@@ -363,14 +363,14 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
                 if(direction == Direction.top){
 
-                    leftAttowPartX = startX + arrowSize;
+                    leftArrowPartX = startX + arrowSize;
                     leftArrowPartY = startY - arrowSize;
 
                     rightArrowPartX = startX - arrowSize;
                     rightArrowPartY = startY - arrowSize;
                 }else if (direction == Direction.side){
 
-                    leftAttowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - arrowSize;
                     leftArrowPartY = startY + arrowSize;
 
                     rightArrowPartX = startX - arrowSize;
@@ -389,7 +389,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
         mPath2.moveTo(startX,startY); // to start
 
-        mPath2.lineTo(leftAttowPartX, leftArrowPartY);//draw the first arrowhead line to the left
+        mPath2.lineTo(leftArrowPartX, leftArrowPartY);//draw the first arrowhead line to the left
 
         mPath2.moveTo(startX,startY); // to start
 

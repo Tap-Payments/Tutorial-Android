@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 
 public class CloseButtonConfig{
 
-    public int size = 50;
+    public int size = 30;
     public int marginTop = 20;
     public int marginEnd = 10;
     public int marginStart = 10;

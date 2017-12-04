@@ -46,7 +46,7 @@ public class SpotlightConfig {
         this.subHeadingTvColor = Color.parseColor("#ffffff");
         this.subHeadingTvText = "Hello";
         this.lineAnimationDuration = 300;
-        this.lineStroke = Utils.dpToPx(4);
+        this.lineStroke = Utils.dpToPx(2);
         this.lineAndArcColor = Color.parseColor("#eb273f");
         this.showTargetArc = true;
     }

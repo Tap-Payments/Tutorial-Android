@@ -2,5 +2,9 @@
     {
         "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/animator/arc_animator.xml",
         "source": "/Users/Morgot/code/goTap-Android/Spotlight-library/src/main/res/animator/arc_animator.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/animator/arc_animator.xml",
+        "source": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/src/main/res/animator/arc_animator.xml"
     }
 ]

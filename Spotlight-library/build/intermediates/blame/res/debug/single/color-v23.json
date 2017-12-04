@@ -1,7 +1,39 @@
 [
     {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
         "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_spinner.xml",
         "source": "/Users/Morgot/.android/build-cache/b7065ed22019c5e73465cecb533a04779603dc6b/output/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_spinner.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_thumb.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_edittext.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_track.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_default.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_tint_seek_thumb.xml"
     },
     {
         "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
@@ -30,6 +62,10 @@
     {
         "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_edittext.xml",
         "source": "/Users/Morgot/.android/build-cache/b7065ed22019c5e73465cecb533a04779603dc6b/output/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_color_highlight_material.xml",
+        "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/color-v23/abc_color_highlight_material.xml"
     },
     {
         "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/color-v23/abc_tint_default.xml",
