@@ -1,1 +1,1 @@
-include ':Spotlight-library' , ":myapplication"
+include ':Spotlight-library' 
