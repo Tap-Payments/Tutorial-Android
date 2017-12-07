@@ -8,19 +8,7 @@
         "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/drawable-v21/abc_btn_colored_material.xml"
     },
     {
-        "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/drawable-v21/abc_btn_colored_material.xml",
-        "source": "/Users/Morgot/.android/build-cache/b7065ed22019c5e73465cecb533a04779603dc6b/output/res/drawable-v21/abc_btn_colored_material.xml"
-    },
-    {
-        "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/drawable-v21/abc_edit_text_material.xml",
-        "source": "/Users/Morgot/.android/build-cache/b7065ed22019c5e73465cecb533a04779603dc6b/output/res/drawable-v21/abc_edit_text_material.xml"
-    },
-    {
         "merged": "/Users/Morgot/code/Tutorial-Android/Spotlight-library/build/intermediates/res/merged/debug/drawable-v21/abc_edit_text_material.xml",
         "source": "/Users/Morgot/.android/build-cache/8c97d79a235fa287a7e06f1e520b80d0627ec06f/output/res/drawable-v21/abc_edit_text_material.xml"
-    },
-    {
-        "merged": "/Users/Morgot/code/goTap-Android/Spotlight-library/build/intermediates/res/merged/debug/drawable-v21/abc_action_bar_item_background_material.xml",
-        "source": "/Users/Morgot/.android/build-cache/b7065ed22019c5e73465cecb533a04779603dc6b/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
     }
 ]
