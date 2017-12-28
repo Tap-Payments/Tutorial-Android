@@ -422,8 +422,11 @@ public class SpotlightView extends FrameLayout {
     /**
      * Dissmiss view with reverse animation
      */
-    private void dismiss() {
+    public void dismiss() {
         preferencesManager.setDisplayed(usageId);
+        if(listener!=null){
+            listener.onUserClicked(usageId,true);
+        }
         startFadeOutAnimation();
     }
 
