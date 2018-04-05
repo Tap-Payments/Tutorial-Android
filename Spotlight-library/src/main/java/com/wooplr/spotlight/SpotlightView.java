@@ -358,27 +358,40 @@ public class SpotlightView extends FrameLayout {
 
 
     private void setupCloseButton(final Activity activity){
+        final FrameLayout closeButtonContainer = new FrameLayout(activity) {
+            @Override
+            public boolean onTouchEvent(MotionEvent event) {
+                return super.onTouchEvent(event);
+            }
 
-        final Button exit = new Button(activity);
+            @Override
+            public boolean performClick() {
+                return super.performClick();
+            }
+        };
+        boolean isStart = (targetView.getPoint().y < getHeight() / 2)&&(targetView.getPoint().x > getWidth() / 2);
 
-
-
+        //close button params
+        final View exit = new View(activity);
         if (closeButtonSettings.image == null){
-
             exit.setBackgroundResource(closeButtonSettings.backgroundInt);
         }else {
-
             exit.setBackground(closeButtonSettings.image);
         }
 
-        boolean isStart =  (targetView.getPoint().y < getHeight() / 2)&&(targetView.getPoint().x > getWidth() / 2) ;
+        closeButtonContainer.addView(exit);
+        FrameLayout.LayoutParams lp = new LayoutParams(Utils.dpToPx(closeButtonSettings.size), Utils.dpToPx(closeButtonSettings.size));
+        lp.gravity = (Gravity.CENTER);
+        exit.setLayoutParams(lp);
 
-
-
-        FrameLayout.LayoutParams lp = new LayoutParams(getDpFromPx(closeButtonSettings.size), getDpFromPx(closeButtonSettings.size));
-        lp.setMargins(0,getDpFromPx(closeButtonSettings.marginTop),0,0);
-        lp.setMarginEnd(getDpFromPx(closeButtonSettings.marginEnd));
-        lp.setMarginStart(getDpFromPx(closeButtonSettings.marginStart));
+        //close button container params
+        int increasedClickAreaInPx = Utils.dpToPx(25);
+        FrameLayout.LayoutParams containerParams = new LayoutParams(Utils.dpToPx(closeButtonSettings.size) + increasedClickAreaInPx * 2,
+                Utils.dpToPx(closeButtonSettings.size) + increasedClickAreaInPx * 2);
+        containerParams.setMargins(Utils.dpToPx(closeButtonSettings.marginStart) - increasedClickAreaInPx, Utils.dpToPx(closeButtonSettings.marginTop) - increasedClickAreaInPx,
+                Utils.dpToPx(closeButtonSettings.marginEnd) - increasedClickAreaInPx, 0);
+        containerParams.setMarginEnd(Utils.dpToPx(closeButtonSettings.marginEnd) - increasedClickAreaInPx);
+        containerParams.setMarginStart(Utils.dpToPx(closeButtonSettings.marginStart) - increasedClickAreaInPx);
         int position = Gravity.START;
         if (isStart&&isArabic){
 
@@ -387,20 +400,19 @@ public class SpotlightView extends FrameLayout {
 
             position = Gravity.END;
         }
-        lp.gravity = (Gravity.TOP|position);
+        containerParams.gravity = (Gravity.TOP|position);
 
-        exit.setOnClickListener(new OnClickListener() {
+        this.addView(closeButtonContainer);
+        closeButtonContainer.setLayoutParams(containerParams);
+
+        closeButtonContainer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                exit.setEnabled(false);
+                closeButtonContainer.setEnabled(false);
                 isElementCLick = false;
                 dismiss();
             }
         });
-
-        exit.setLayoutParams(lp);
-        this.addView(exit);
-
     }
 
 
