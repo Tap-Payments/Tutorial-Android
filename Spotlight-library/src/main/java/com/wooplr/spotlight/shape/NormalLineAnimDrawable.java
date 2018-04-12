@@ -53,7 +53,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setDither(true);
-        p.setStyle(Paint.Style.STROKE);
+        p.setStyle(Paint.Style.FILL_AND_STROKE);
         p.setStrokeJoin(Paint.Join.ROUND);
         p.setStrokeCap(Paint.Cap.ROUND);
         p.setStrokeWidth(lineStroke);
@@ -394,6 +394,9 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         mPath2.moveTo(startX,startY); // to start
 
         mPath2.lineTo(rightArrowPartX, rightArrowPartY);//draw the next arrowhead line to the rights
+
+        mPath2.moveTo(leftArrowPartX,leftArrowPartY); // to start
+        mPath2.lineTo(rightArrowPartX, rightArrowPartY);
 
     }
 
