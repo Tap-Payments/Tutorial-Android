@@ -10,9 +10,11 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
+import com.wooplr.spotlight.R;
 import com.wooplr.spotlight.target.SpotAnimPoint;
 
 import java.util.ArrayList;
@@ -26,7 +28,9 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
     private static final String FACTOR_X = "factorX";
     private static final String FACTOR_Y = "factorY";
     private final Path mPath2;
+    private final Path mTrianglePath;
     private final Paint mPaint2;
+    private final Paint mTrianglePaint;
     private float factorY, factorX;
     private SpotAnimPoint curSpotAnimPoint = null;
     private int moveTimes;
@@ -46,18 +50,28 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
     public NormalLineAnimDrawable(Paint paint) {
         mPath2 = new Path();
+        mTrianglePath = new Path();
         mPaint2 = paint == null ? getDefaultPaint() : paint;
+        mTrianglePaint = getTrianglePaint();
     }
 
     private Paint getDefaultPaint() {
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setDither(true);
-        p.setStyle(Paint.Style.FILL_AND_STROKE);
+        p.setStyle(Paint.Style.STROKE);
         p.setStrokeJoin(Paint.Join.ROUND);
         p.setStrokeCap(Paint.Cap.ROUND);
         p.setStrokeWidth(lineStroke);
         p.setColor(lineColor);
+        return p;
+    }
+
+    private Paint getTrianglePaint() {
+        Paint p = new Paint();
+        p.setStyle(Paint.Style.FILL_AND_STROKE);
+        p.setStrokeWidth(0);
+        p.setColor(Color.parseColor("#FFFFFF"));
         return p;
     }
 
@@ -180,6 +194,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
     public void draw(Canvas canvas) {
         if (curSpotAnimPoint != null) {
             mPath2.rewind();
+            mTrianglePath.rewind();
             float curX = getPoints().get(0).getCurX();
             float curY = getPoints().get(0).getCurY();
             float moveX = getPoints().get(getPoints().size()-1).getMoveX();
@@ -295,45 +310,46 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
         float rightArrowPartX = 0;
         float rightArrowPartY = 0;
 
+        int modifiedArrowSize = arrowSize / 4;
         switch (quarter){
 
             case rightTop:
 
                 if(direction == Direction.bottom){
 
-                    leftArrowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - modifiedArrowSize;
                     leftArrowPartY = startY + arrowSize;
 
-                    rightArrowPartX = startX + arrowSize;
+                    rightArrowPartX = startX + modifiedArrowSize;
                     rightArrowPartY = startY + arrowSize;
                 }else if (direction == Direction.side){
 
                     leftArrowPartX = startX - arrowSize;
-                    leftArrowPartY = startY - arrowSize;
+                    leftArrowPartY = startY - modifiedArrowSize;
 
                     rightArrowPartX = startX - arrowSize;
-                    rightArrowPartY = startY + arrowSize;
+                    rightArrowPartY = startY + modifiedArrowSize;
 
                 }
 
-            break;
+                break;
 
             case leftTop:
 
                 if(direction == Direction.bottom){
 
-                    leftArrowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - modifiedArrowSize;
                     leftArrowPartY = startY + arrowSize;
 
-                    rightArrowPartX = startX + arrowSize;
+                    rightArrowPartX = startX + modifiedArrowSize;
                     rightArrowPartY = startY + arrowSize;
                 }else if (direction == Direction.side){
 
                     leftArrowPartX = startX + arrowSize;
-                    leftArrowPartY = startY - arrowSize;
+                    leftArrowPartY = startY - modifiedArrowSize;
 
                     rightArrowPartX = startX + arrowSize;
-                    rightArrowPartY = startY + arrowSize;
+                    rightArrowPartY = startY + modifiedArrowSize;
 
                 }
 
@@ -343,18 +359,18 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
                 if(direction == Direction.top){
 
-                    leftArrowPartX = startX - arrowSize;
+                    leftArrowPartX = startX - modifiedArrowSize;
                     leftArrowPartY = startY - arrowSize;
 
-                    rightArrowPartX = startX + arrowSize;
+                    rightArrowPartX = startX + modifiedArrowSize;
                     rightArrowPartY = startY - arrowSize;
                 }else if (direction == Direction.side){
 
                     leftArrowPartX = startX - arrowSize;
-                    leftArrowPartY = startY - arrowSize;
+                    leftArrowPartY = startY - modifiedArrowSize;
 
                     rightArrowPartX = startX - arrowSize;
-                    rightArrowPartY = startY + arrowSize;
+                    rightArrowPartY = startY + modifiedArrowSize;
                 }
 
                 break;
@@ -363,18 +379,18 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
                 if(direction == Direction.top){
 
-                    leftArrowPartX = startX + arrowSize;
+                    leftArrowPartX = startX + modifiedArrowSize;
                     leftArrowPartY = startY - arrowSize;
 
-                    rightArrowPartX = startX - arrowSize;
+                    rightArrowPartX = startX - modifiedArrowSize;
                     rightArrowPartY = startY - arrowSize;
                 }else if (direction == Direction.side){
 
                     leftArrowPartX = startX - arrowSize;
-                    leftArrowPartY = startY + arrowSize;
+                    leftArrowPartY = startY + modifiedArrowSize;
 
                     rightArrowPartX = startX - arrowSize;
-                    rightArrowPartY = startY - arrowSize;
+                    rightArrowPartY = startY - modifiedArrowSize;
                 }
 
                 break;
@@ -395,9 +411,17 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
         mPath2.lineTo(rightArrowPartX, rightArrowPartY);//draw the next arrowhead line to the rights
 
-        mPath2.moveTo(leftArrowPartX,leftArrowPartY); // to start
-        mPath2.lineTo(rightArrowPartX, rightArrowPartY);
+        mPath2.lineTo(leftArrowPartX, leftArrowPartY);
 
+        mTrianglePath.moveTo(startX,startY); // to start
+        mTrianglePath.lineTo(leftArrowPartX, leftArrowPartY);//draw the first arrowhead line to the left
+
+        mTrianglePath.moveTo(startX,startY); // to start
+        mTrianglePath.lineTo(rightArrowPartX, rightArrowPartY);//draw the next arrowhead line to the rights
+
+        mTrianglePath.lineTo(leftArrowPartX, leftArrowPartY);
+
+        mTrianglePath.close();
     }
 
 
@@ -428,6 +452,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
                 timeSinceLast -= animMsBetweenStrokes;
             }
 
+            boolean more = true;
             if (timeSinceLast > 0) {
                 // Get next segment of path
                 float newPos = (float)(timeSinceLast) / animSpeedInMs + animCurrentPos;
@@ -440,7 +465,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
                 if (newPos > animPathMeasure.getLength()) {
                     animCurrentPos = 0.0f;
                     animCurrentCountour++;
-                    boolean more = animPathMeasure.nextContour();
+                    more = animPathMeasure.nextContour();
                     // Check if finished
                     if (!more) { animRunning = false; }
                 }
@@ -448,6 +473,9 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
             // Draw path
             canvas.drawPath(animPath, paint);
+            if (!more && mTrianglePath != null) {
+                canvas.drawPath(mTrianglePath, mTrianglePaint);
+            }
         }
 
         invalidateSelf();
@@ -469,7 +497,7 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
     @Override
     public int getOpacity() {
-        return 0;
+        return PixelFormat.UNKNOWN;
     }
 
     public List<SpotAnimPoint> getPoints() {

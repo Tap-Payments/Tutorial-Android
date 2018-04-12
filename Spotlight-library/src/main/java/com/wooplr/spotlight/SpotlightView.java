@@ -1406,7 +1406,7 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
 
-        public Builder lineStroke(int stroke) {
+        public Builder lineStroke(double stroke) {
             spotlightView.setLineStroke(Utils.dpToPx(stroke));
             return this;
         }
@@ -1428,9 +1428,9 @@ public class SpotlightView extends FrameLayout {
         }
 
 
-        public Builder setArrowSize(int arrowSize){
+        public Builder setArrowSize(int arrowSizeDp){
 
-            spotlightView.arrowSize = arrowSize;
+            spotlightView.arrowSize = Utils.dpToPx(arrowSizeDp);
             return this;
         }
 

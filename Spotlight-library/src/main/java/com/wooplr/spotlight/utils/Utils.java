@@ -15,4 +15,8 @@ public class Utils {
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
+
+    public static int dpToPx(double dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
 }
