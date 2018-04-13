@@ -388,7 +388,8 @@ public class SpotlightView extends FrameLayout {
         int increasedClickAreaInPx = Utils.dpToPx(25);
         FrameLayout.LayoutParams containerParams = new LayoutParams(Utils.dpToPx(closeButtonSettings.size) + increasedClickAreaInPx * 2,
                 Utils.dpToPx(closeButtonSettings.size) + increasedClickAreaInPx * 2);
-        containerParams.setMargins(Utils.dpToPx(closeButtonSettings.marginStart) - increasedClickAreaInPx, Utils.dpToPx(closeButtonSettings.marginTop) - increasedClickAreaInPx,
+        containerParams.setMargins(Utils.dpToPx(closeButtonSettings.marginStart) - increasedClickAreaInPx,
+                Utils.dpToPx(closeButtonSettings.marginTop) + Utils.getStatusBarHeight(getContext()) - increasedClickAreaInPx,
                 Utils.dpToPx(closeButtonSettings.marginEnd) - increasedClickAreaInPx, 0);
         containerParams.setMarginEnd(Utils.dpToPx(closeButtonSettings.marginEnd) - increasedClickAreaInPx);
         containerParams.setMarginStart(Utils.dpToPx(closeButtonSettings.marginStart) - increasedClickAreaInPx);
