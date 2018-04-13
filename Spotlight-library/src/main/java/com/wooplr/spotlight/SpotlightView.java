@@ -206,6 +206,7 @@ public class SpotlightView extends FrameLayout {
     private int arrowMargin = 10;
 
     boolean isElementCLick = true;
+    private boolean considerStatusBarHeightInCloseButton;
 
 
     public SpotlightView(Context context) {
@@ -389,7 +390,7 @@ public class SpotlightView extends FrameLayout {
         FrameLayout.LayoutParams containerParams = new LayoutParams(Utils.dpToPx(closeButtonSettings.size) + increasedClickAreaInPx * 2,
                 Utils.dpToPx(closeButtonSettings.size) + increasedClickAreaInPx * 2);
         containerParams.setMargins(Utils.dpToPx(closeButtonSettings.marginStart) - increasedClickAreaInPx,
-                Utils.dpToPx(closeButtonSettings.marginTop) + Utils.getStatusBarHeight(getContext()) - increasedClickAreaInPx,
+                Utils.dpToPx(closeButtonSettings.marginTop) + (considerStatusBarHeightInCloseButton ? Utils.getStatusBarHeight(getContext()) : 0) - increasedClickAreaInPx,
                 Utils.dpToPx(closeButtonSettings.marginEnd) - increasedClickAreaInPx, 0);
         containerParams.setMarginEnd(Utils.dpToPx(closeButtonSettings.marginEnd) - increasedClickAreaInPx);
         containerParams.setMarginStart(Utils.dpToPx(closeButtonSettings.marginStart) - increasedClickAreaInPx);
@@ -1428,6 +1429,10 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
 
+        public Builder considerStatusBarHeightInCloseButton(boolean consider){
+            spotlightView.considerStatusBarHeightInCloseButton = consider;
+            return this;
+        }
 
         public Builder setArrowSize(int arrowSizeDp){
 
