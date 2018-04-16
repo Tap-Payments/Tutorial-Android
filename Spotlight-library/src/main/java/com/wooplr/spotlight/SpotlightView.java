@@ -34,7 +34,6 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -207,6 +206,7 @@ public class SpotlightView extends FrameLayout {
 
     boolean isElementCLick = true;
     private boolean considerStatusBarHeightInCloseButton;
+    private Bitmap backgroundBitmap;
 
 
     public SpotlightView(Context context) {
@@ -271,7 +271,11 @@ public class SpotlightView extends FrameLayout {
         }
 
         this.canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        this.canvas.drawColor(maskColor);
+        if (backgroundBitmap != null) {
+            this.canvas.drawBitmap(backgroundBitmap, 0, 0, null);
+        } else {
+            this.canvas.drawColor(maskColor);
+        }
 
         circleShape.draw(this.canvas, eraser, padding);
         for(int i=1;i<circles.size();i++){
@@ -1108,6 +1112,11 @@ public class SpotlightView extends FrameLayout {
         this.maskColor = maskColor;
     }
 
+
+    private void setBackgroundBitmap(Bitmap bitmap) {
+        this.backgroundBitmap = bitmap;
+    }
+
     public void setReady(boolean ready) {
         isReady = ready;
     }
@@ -1387,6 +1396,11 @@ public class SpotlightView extends FrameLayout {
         public Builder setBackgroundColor(String hexColor){
 
             spotlightView.setMaskColor(Color.parseColor(hexColor));
+            return this;
+        }
+
+        public Builder setBackgroundBitmap(Bitmap bitmap){
+            spotlightView.setBackgroundBitmap(bitmap);
             return this;
         }
 
