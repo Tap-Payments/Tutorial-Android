@@ -264,6 +264,8 @@ public class SpotlightView extends FrameLayout {
         canvastemp = canvas;
         if (!isReady) return;
 
+        int topPosition = isBackgroundFullScreen ? 0 : Utils.getStatusBarHeight(getContext());
+
         if (bitmap == null || canvas == null) {
             if (bitmap != null) bitmap.recycle();
 
@@ -273,7 +275,6 @@ public class SpotlightView extends FrameLayout {
 
         this.canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         if (backgroundBitmap != null) {
-            int topPosition = isBackgroundFullScreen ? 0 : Utils.getStatusBarHeight(getContext());
             this.canvas.drawBitmap(backgroundBitmap, 0, topPosition, null);
         } else {
             this.canvas.drawColor(maskColor);
@@ -285,7 +286,7 @@ public class SpotlightView extends FrameLayout {
             c.draw(this.canvas,eraser,padding);
         }
 
-        canvas.drawBitmap(bitmap, 0, 0, null);
+        canvas.drawBitmap(bitmap, 0, topPosition, null);
     }
 
 
