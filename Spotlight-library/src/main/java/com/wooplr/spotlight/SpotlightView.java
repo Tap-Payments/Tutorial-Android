@@ -207,6 +207,7 @@ public class SpotlightView extends FrameLayout {
     boolean isElementCLick = true;
     private boolean considerStatusBarHeightInCloseButton;
     private Bitmap backgroundBitmap;
+    private boolean isBackgroundFullScreen;
 
 
     public SpotlightView(Context context) {
@@ -272,7 +273,8 @@ public class SpotlightView extends FrameLayout {
 
         this.canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         if (backgroundBitmap != null) {
-            this.canvas.drawBitmap(backgroundBitmap, 0, 0, null);
+            int topPosition = isBackgroundFullScreen ? 0 : Utils.getStatusBarHeight(getContext());
+            this.canvas.drawBitmap(backgroundBitmap, 0, topPosition, null);
         } else {
             this.canvas.drawColor(maskColor);
         }
@@ -1463,6 +1465,11 @@ public class SpotlightView extends FrameLayout {
         public Builder setArabic(boolean isArabic){
 
             spotlightView.isArabic = isArabic;
+            return this;
+        }
+
+        public Builder isBackgroundFullScreen(boolean isBackgroundFullScreen) {
+            spotlightView.isBackgroundFullScreen = isBackgroundFullScreen;
             return this;
         }
 
