@@ -286,7 +286,7 @@ public class SpotlightView extends FrameLayout {
             c.draw(this.canvas,eraser,padding);
         }
 
-        canvas.drawBitmap(bitmap, 0, topPosition, null);
+        canvas.drawBitmap(bitmap, 0, 0, null);
     }
 
 
