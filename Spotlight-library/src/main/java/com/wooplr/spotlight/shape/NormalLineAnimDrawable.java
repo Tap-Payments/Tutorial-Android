@@ -14,7 +14,6 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
-import com.wooplr.spotlight.R;
 import com.wooplr.spotlight.target.SpotAnimPoint;
 
 import java.util.ArrayList;
@@ -245,6 +244,10 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
 
                             d = Direction.side;
                         }
+                    }else{
+
+                        q = Quarter.rightBottom;
+                        d = Direction.side;
                     }
                 }else if (curX < moveX){
 
@@ -264,8 +267,12 @@ public class NormalLineAnimDrawable extends Drawable implements ValueAnimator.An
                         if (moveX > midleX){
 
                             d = Direction.top;
-                        }else {
+                        }else if(moveX < midleX) {
 
+                            d = Direction.side;
+                        }else{
+
+                            q = Quarter.leftTop;
                             d = Direction.side;
                         }
                     }

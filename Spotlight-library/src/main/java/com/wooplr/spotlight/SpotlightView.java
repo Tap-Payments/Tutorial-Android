@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
@@ -25,12 +26,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -68,6 +71,13 @@ public class SpotlightView extends FrameLayout {
      * isStraigth
      */
     private boolean isStraigth = false;
+
+    /**
+     * isStraigth
+     */
+    private boolean straigthVertical = true;
+
+
     /**
      * OverLay color
      */
@@ -790,270 +800,350 @@ public class SpotlightView extends FrameLayout {
         NormalLineAnimDrawable.lineStroke = lineStroke;
         NormalLineAnimDrawable.arrowSize = arrowSize;
 
-        //check up or down
-        if (targetView.getPoint().y > screenHeight / 2) {//Down TODO: add a logic for by 2
-            if (isStraigth) {
 
-                startPX = getMiddleOfViewX();
-                startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
+        if(isStraigth){
 
-                endPX = startPX;
-                endPY = startPY - (int) (shiftValue * 4);
+            if(straigthVertical){
 
-                spotAnimPoints.add(new SpotAnimPoint(startPX,
-                        startPY,
-                        endPX,
-                        endPY
-                ));
+                if (targetView.getPoint().y > screenHeight / 2){ //bottom
 
-                headingParams.leftMargin = 0;
-                headingParams.rightMargin = 0;
-                headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
-                headingParams.topMargin = extramargin;
-                headingParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-                headingTv.setGravity(Gravity.CENTER);
-
-            }else {
-                if (targetView.getPoint().x > screenWidth / 2) {//Right
-
-                    startPX = (targetView.getViewRight() - targetView.getViewWidth() / 2);
+                    startPX = getMiddleOfViewX();
                     startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
 
-                    midlePX = startPX;
-                    midlePY = startPY - (int) (shiftValue * 4);
+                    endPX = startPX;
+                    endPY = startPY - (int) (shiftValue * 4);
+
+                    spotAnimPoints.add(new SpotAnimPoint(startPX,
+                            startPY,
+                            endPX,
+                            endPY
+                    ));
+
+                    headingParams.leftMargin = 0;
+                    headingParams.rightMargin = 0;
+                    headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
+                    headingParams.topMargin = extramargin;
+                    headingParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+                    headingTv.setGravity(Gravity.CENTER);
+                }else{//top
+
+                        startPX = getMiddleOfViewX();
+                        startPY = getMiddleOfViewY() + Utils.dpToPx(50);
+
+                        endPX = startPX;
+                        endPY = startPY + (int) (1.5 * shiftValue);
+
+                        spotAnimPoints.add(new SpotAnimPoint(startPX,
+                                startPY,
+                                endPX,
+                                endPY
+                        ));
+
+                        headingParams.leftMargin = gutter;
+                        headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
+                        //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
+                        headingParams.topMargin = (int) endPY + spaceBelowLine;
+                        headingParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                        headingTv.setGravity(Gravity.CENTER);
+                }
+
+            }else{//horizontal
+
+                float middleY = 0;
+                for(View v : viewsForTargets){
+
+                    middleY += v.getY();
+                }
+                middleY /= viewsForTargets.size();
+                middleY += shiftValue;
+                int deviceWidth;
+                WindowManager wm =
+                        (WindowManager) headingTv.getContext().getSystemService(Context.WINDOW_SERVICE);
+                Display display = wm.getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                deviceWidth = size.x;
+
+
+                int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+
+
+
+                if (targetView.getPoint().x > screenWidth / 2) {//right
+
+                    startPY = middleY;
+                    startPX = targetView.getPoint().x - (extraPaddingForArc*2) - arrowMargin;
 
                     endPX = startPX - (int) (shiftValue * 1.5);
-                    endPY = midlePY;
-
-                    if (startPX > screenWidth || startPX < 0) {
-
-                        startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
-                        startPY = targetView.getViewTop() - shiftValue;
-
-                        midlePX = startPX;
-                        midlePY = startPY - shiftValue * 2;
-
-                        endPX = midlePX - shiftValue;
-                        endPY = midlePY;
-
-
-                    }
-
+                    endPY = startPY;
 
                     spotAnimPoints.add(new SpotAnimPoint(startPX,
                             startPY,
-                            midlePX,
-                            midlePY
-
-                    ));
-                    spotAnimPoints.add(new SpotAnimPoint(midlePX,
-                            midlePY,
                             endPX,
-                            endPY));
-                    //TextViews
-                    headingParams.leftMargin = gutter;
-                    headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
-                    headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
-                    headingParams.topMargin = extramargin;
-                    headingParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-                    headingTv.setGravity(Gravity.LEFT);
-
-
-                    subHeadingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
-                    subHeadingParams.leftMargin = gutter;
-                    subHeadingParams.bottomMargin = extramargin;
-                    subHeadingParams.topMargin = targetView.getViewTop() / 2 + spaceBelowLine;
-                    subHeadingParams.gravity = Gravity.LEFT;
-                    subHeadingTv.setGravity(Gravity.LEFT);
-
-                } else {//left
-
-                    startPX = (targetView.getViewRight() - targetView.getViewWidth() / 2);
-                    startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
-
-                    midlePX = startPX;
-                    midlePY = startPY - shiftValue * 4;
-
-                    endPX = startPX + (int) (shiftValue * 1.5);
-                    endPY = midlePY;
-
-
-                    if (startPX > screenWidth || startPX < 0) {
-
-                        startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
-                        startPY = targetView.getViewTop() - shiftValue;
-
-                        midlePX = startPX;
-                        midlePY = startPY - shiftValue * 2;
-
-                        endPX = midlePX - shiftValue;
-                        endPY = midlePY;
-
-
-                    }
-
-                    spotAnimPoints.add(new SpotAnimPoint(startPX,
-                            startPY,
-                            midlePX,
-                            midlePY
-
+                            endPY
                     ));
-                    spotAnimPoints.add(new SpotAnimPoint(midlePX,
-                            midlePY,
-                            endPX,
-                            endPY));
 
+                    int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(deviceWidth - endPX), View.MeasureSpec.AT_MOST);
+                    headingTv.measure(widthMeasureSpec, heightMeasureSpec);
 
-                    //TextViews
-                    headingParams.rightMargin = 0;
                     headingParams.leftMargin = 0;
-                    headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
-                    headingParams.topMargin = extramargin;
-                    headingParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-                    headingTv.setGravity(Gravity.RIGHT);
-
-
-                    subHeadingParams.rightMargin = gutter;
-                    subHeadingParams.leftMargin = (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
-                    subHeadingParams.topMargin = targetView.getViewTop() / 2 + spaceBelowLine;
-                    subHeadingParams.bottomMargin = extramargin;
-                    subHeadingParams.gravity = Gravity.RIGHT;
-                    subHeadingTv.setGravity(Gravity.LEFT);
-
-                }
-            }
-        } else {//top
-            if (isStraigth) {
-
-                startPX = getMiddleOfViewX();
-                startPY = getMiddleOfViewY() + Utils.dpToPx(50);
-
-                endPX = startPX;
-                endPY = startPY + (int) (1.5 * shiftValue);
-
-                spotAnimPoints.add(new SpotAnimPoint(startPX,
-                        startPY,
-                        endPX,
-                        endPY
-                ));
-
-                headingParams.leftMargin = gutter;
-                headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
-                //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
-                headingParams.topMargin = (int) endPY + spaceBelowLine;
-                headingParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-                headingTv.setGravity(Gravity.CENTER);
-
-            }else {
-                if (targetView.getPoint().x > screenWidth / 2) {//Right
-
-                    startPX = (targetView.getViewLeft()) - extraPaddingForArc - arrowMargin - radius;
-                    startPY =  getMiddleOfViewY();
-
-
-                    midlePX = startPX - shiftValue * 3;
-                    midlePY = startPY;
-
-                    endPX = midlePX;
-                    endPY = startPY + (int) (1.5 * shiftValue);
-
-                    if (startPX > screenWidth || startPX < 0) {
-
-                        startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
-                        startPY = targetView.getViewBottom() + shiftValue;
-
-                        midlePX = startPX;
-                        midlePY = startPY + shiftValue * 2;
-
-                        endPX = midlePX + shiftValue;
-                        endPY = midlePY;
-
-
-                    }
-
-                    spotAnimPoints.add(new SpotAnimPoint(startPX,
-                            startPY,
-                            midlePX,
-                            midlePY
-
-                    ));
-                    spotAnimPoints.add(new SpotAnimPoint(midlePX,
-                            midlePY,
-                            endPX,
-                            endPY));
-
-
-//                //TextViews
-                    headingParams.leftMargin = gutter;
-                    headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
-                    //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
-                    headingParams.topMargin = (int) endPY + spaceBelowLine;
-                    headingParams.gravity = Gravity.TOP | Gravity.LEFT;
-                    headingTv.setGravity(Gravity.LEFT);
-
-                    subHeadingParams.leftMargin = gutter;
-                    subHeadingParams.rightMargin = screenWidth - targetView.getViewRight() + targetView.getViewWidth() / 2 + extramargin;
-                    subHeadingParams.bottomMargin = extramargin;
-                    subHeadingParams.topMargin = ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceBelowLine;
-                    subHeadingParams.gravity = Gravity.LEFT;
-                    subHeadingTv.setGravity(Gravity.LEFT);
-
-
+                    headingParams.rightMargin = (int)(endPX + shiftValue/2);
+                    headingParams.bottomMargin = 0;
+                    headingParams.topMargin = (int)(startPY - headingTv.getMeasuredHeight()/2 -extramargin);
+                    headingParams.gravity = Gravity.TOP | Gravity.RIGHT;
+                    headingTv.setGravity(Gravity.CENTER|Gravity.RIGHT);
+                    //headingTv.setBackgroundColor(Color.RED);
                 } else {//left
 
+                    startPY = middleY;
+                    startPX = ( targetView.getViewWidth()) + (float)(arrowMargin) + Utils.dpToPx(15);
 
-                    startPX = (targetView.getViewRight()) + extraPaddingForArc + arrowMargin + radius;
-                    startPY = getMiddleOfViewY();
-
-
-                    midlePX = startPX + shiftValue * 3;
-                    midlePY = startPY;
-
-                    endPX = midlePX;
-                    endPY = startPY + (int) (1.5 * shiftValue);
-
-                    if (startPX > screenWidth || startPX < 0) {
-
-                        startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
-                        startPY = targetView.getViewBottom() + shiftValue;
-
-                        midlePX = startPX;
-                        midlePY = startPY + shiftValue * 2;
-
-                        endPX = midlePX + shiftValue;
-                        endPY = midlePY;
-
-
-                    }
-
+                    endPX = startPX + (int) (shiftValue );
+                    endPY = startPY;
 
                     spotAnimPoints.add(new SpotAnimPoint(startPX,
                             startPY,
-                            midlePX,
-                            midlePY
-
-                    ));
-                    spotAnimPoints.add(new SpotAnimPoint(midlePX,
-                            midlePY,
                             endPX,
-                            endPY));
+                            endPY
+                    ));
+
+                    int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(deviceWidth - endPX), View.MeasureSpec.AT_MOST);
+                    headingTv.measure(widthMeasureSpec, heightMeasureSpec);
+
+                    headingParams.leftMargin = (int)(endPX + Utils.dpToPx(5));
+                    headingParams.rightMargin = Utils.dpToPx(10);
+                    headingParams.bottomMargin = 0;
+                    headingParams.topMargin = (int)(startPY - headingTv.getMeasuredHeight()/2 -extramargin);
+                    headingParams.gravity = Gravity.TOP | Gravity.LEFT;
+                    headingTv.setGravity(Gravity.CENTER|Gravity.LEFT);
+                }
+
+
+            }
+
+        }else {
+            if (targetView.getPoint().y > screenHeight / 2) {//Down
+
+                    if (targetView.getPoint().x > screenWidth / 2) {//Right
+
+                        startPX = (targetView.getViewRight() - targetView.getViewWidth() / 2);
+                        startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
+
+                        midlePX = startPX;
+                        midlePY = startPY - (int) (shiftValue * 4);
+
+                        endPX = startPX - (int) (shiftValue * 1.5);
+                        endPY = midlePY;
+
+                        if (startPX > screenWidth || startPX < 0) {
+
+                            startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
+                            startPY = targetView.getViewTop() - shiftValue;
+
+                            midlePX = startPX;
+                            midlePY = startPY - shiftValue * 2;
+
+                            endPX = midlePX - shiftValue;
+                            endPY = midlePY;
+
+
+                        }
+
+
+                        spotAnimPoints.add(new SpotAnimPoint(startPX,
+                                startPY,
+                                midlePX,
+                                midlePY
+
+                        ));
+                        spotAnimPoints.add(new SpotAnimPoint(midlePX,
+                                midlePY,
+                                endPX,
+                                endPY));
+                        //TextViews
+                        headingParams.leftMargin = gutter;
+                        headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
+                        headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
+                        headingParams.topMargin = extramargin;
+                        headingParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+                        headingTv.setGravity(Gravity.LEFT);
+
+
+                        subHeadingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
+                        subHeadingParams.leftMargin = gutter;
+                        subHeadingParams.bottomMargin = extramargin;
+                        subHeadingParams.topMargin = targetView.getViewTop() / 2 + spaceBelowLine;
+                        subHeadingParams.gravity = Gravity.LEFT;
+                        subHeadingTv.setGravity(Gravity.LEFT);
+
+                    } else {//left
+
+                        startPX = (targetView.getViewRight() - targetView.getViewWidth() / 2);
+                        startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
+
+                        midlePX = startPX;
+                        midlePY = startPY - shiftValue * 4;
+
+                        endPX = startPX + (int) (shiftValue * 1.5);
+                        endPY = midlePY;
+
+
+                        if (startPX > screenWidth || startPX < 0) {
+
+                            startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
+                            startPY = targetView.getViewTop() - shiftValue;
+
+                            midlePX = startPX;
+                            midlePY = startPY - shiftValue * 2;
+
+                            endPX = midlePX - shiftValue;
+                            endPY = midlePY;
+
+
+                        }
+
+                        spotAnimPoints.add(new SpotAnimPoint(startPX,
+                                startPY,
+                                midlePX,
+                                midlePY
+
+                        ));
+                        spotAnimPoints.add(new SpotAnimPoint(midlePX,
+                                midlePY,
+                                endPX,
+                                endPY));
+
+
+                        //TextViews
+                        headingParams.rightMargin = 0;
+                        headingParams.leftMargin = 0;
+                        headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
+                        headingParams.topMargin = extramargin;
+                        headingParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+                        headingTv.setGravity(Gravity.RIGHT);
+
+
+                        subHeadingParams.rightMargin = gutter;
+                        subHeadingParams.leftMargin = (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
+                        subHeadingParams.topMargin = targetView.getViewTop() / 2 + spaceBelowLine;
+                        subHeadingParams.bottomMargin = extramargin;
+                        subHeadingParams.gravity = Gravity.RIGHT;
+                        subHeadingTv.setGravity(Gravity.LEFT);
+
+                    }
+
+            } else {//top
+
+                    if (targetView.getPoint().x > screenWidth / 2) {//Right
+
+                        startPX = (targetView.getViewLeft()) - extraPaddingForArc - arrowMargin - radius;
+                        startPY = getMiddleOfViewY();
+
+
+                        midlePX = startPX - shiftValue * 3;
+                        midlePY = startPY;
+
+                        endPX = midlePX;
+                        endPY = startPY + (int) (1.5 * shiftValue);
+
+                        if (startPX > screenWidth || startPX < 0) {
+
+                            startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
+                            startPY = targetView.getViewBottom() + shiftValue;
+
+                            midlePX = startPX;
+                            midlePY = startPY + shiftValue * 2;
+
+                            endPX = midlePX + shiftValue;
+                            endPY = midlePY;
+
+
+                        }
+
+                        spotAnimPoints.add(new SpotAnimPoint(startPX,
+                                startPY,
+                                midlePX,
+                                midlePY
+
+                        ));
+                        spotAnimPoints.add(new SpotAnimPoint(midlePX,
+                                midlePY,
+                                endPX,
+                                endPY));
 
 
 //                //TextViews
-                    headingParams.leftMargin = targetView.getViewRight() - targetView.getViewWidth() / 2 + extramargin;
-                    headingParams.rightMargin = gutter;
-                    //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
-                    headingParams.topMargin = (int) endPY + spaceBelowLine;
-                    headingParams.gravity = Gravity.TOP | Gravity.RIGHT;
-                    headingTv.setGravity(Gravity.RIGHT);
+                        headingParams.leftMargin = gutter;
+                        headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
+                        //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
+                        headingParams.topMargin = (int) endPY + spaceBelowLine;
+                        headingParams.gravity = Gravity.TOP | Gravity.LEFT;
+                        headingTv.setGravity(Gravity.LEFT);
 
-                    subHeadingParams.leftMargin = targetView.getViewRight() - targetView.getViewWidth() / 2 + extramargin;
-                    subHeadingParams.rightMargin = gutter;
-                    subHeadingParams.bottomMargin = extramargin;
-                    subHeadingParams.topMargin = ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceBelowLine;
-                    subHeadingParams.gravity = Gravity.RIGHT;
-                    subHeadingTv.setGravity(Gravity.LEFT);
-                }
+                        subHeadingParams.leftMargin = gutter;
+                        subHeadingParams.rightMargin = screenWidth - targetView.getViewRight() + targetView.getViewWidth() / 2 + extramargin;
+                        subHeadingParams.bottomMargin = extramargin;
+                        subHeadingParams.topMargin = ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceBelowLine;
+                        subHeadingParams.gravity = Gravity.LEFT;
+                        subHeadingTv.setGravity(Gravity.LEFT);
+
+
+                    } else {//left
+
+
+                        startPX = (targetView.getViewRight()) + extraPaddingForArc + arrowMargin + radius;
+                        startPY = getMiddleOfViewY();
+
+
+                        midlePX = startPX + shiftValue * 3;
+                        midlePY = startPY;
+
+                        endPX = midlePX;
+                        endPY = startPY + (int) (1.5 * shiftValue);
+
+                        if (startPX > screenWidth || startPX < 0) {
+
+                            startPX = targetView.getViewWidth() / 2 + targetView.getViewLeft();
+                            startPY = targetView.getViewBottom() + shiftValue;
+
+                            midlePX = startPX;
+                            midlePY = startPY + shiftValue * 2;
+
+                            endPX = midlePX + shiftValue;
+                            endPY = midlePY;
+
+
+                        }
+
+
+                        spotAnimPoints.add(new SpotAnimPoint(startPX,
+                                startPY,
+                                midlePX,
+                                midlePY
+
+                        ));
+                        spotAnimPoints.add(new SpotAnimPoint(midlePX,
+                                midlePY,
+                                endPX,
+                                endPY));
+
+
+//                //TextViews
+                        headingParams.leftMargin = targetView.getViewRight() - targetView.getViewWidth() / 2 + extramargin;
+                        headingParams.rightMargin = gutter;
+                        //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
+                        headingParams.topMargin = (int) endPY + spaceBelowLine;
+                        headingParams.gravity = Gravity.TOP | Gravity.RIGHT;
+                        headingTv.setGravity(Gravity.RIGHT);
+
+                        subHeadingParams.leftMargin = targetView.getViewRight() - targetView.getViewWidth() / 2 + extramargin;
+                        subHeadingParams.rightMargin = gutter;
+                        subHeadingParams.bottomMargin = extramargin;
+                        subHeadingParams.topMargin = ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceBelowLine;
+                        subHeadingParams.gravity = Gravity.RIGHT;
+                        subHeadingTv.setGravity(Gravity.LEFT);
+                    }
+
             }
         }
 
@@ -1460,6 +1550,12 @@ public class SpotlightView extends FrameLayout {
         public Builder setLineSize(int linesize){
 
             spotlightView.shiftValue = linesize;
+            return this;
+        }
+
+        public Builder setStraightVertical(boolean straightVertical){
+
+            spotlightView.straigthVertical = straightVertical;
             return this;
         }
 
