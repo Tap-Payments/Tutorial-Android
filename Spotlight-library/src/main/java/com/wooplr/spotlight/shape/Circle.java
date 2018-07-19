@@ -23,7 +23,7 @@ public class Circle {
     public boolean isCircle = true;
     public boolean isBrick = false;
 
-    public int shiftCoord= 0;
+    public int shiftCoordX = 0,shiftCoordY = 0,shiftRadius = 0;
 
 
 
@@ -42,8 +42,10 @@ public class Circle {
         isBrick = brick;
         return this;
     }
-    public  Circle setMask(int shiftCoord){
-        this.shiftCoord = shiftCoord;
+    public  Circle setMask(int shiftCoordX,int shiftCoordY,int shiftRadius){
+        this.shiftCoordX = shiftCoordX;
+        this.shiftCoordY = shiftCoordY;
+        this.shiftRadius = shiftRadius;
         return this;
     }
 
@@ -52,7 +54,7 @@ public class Circle {
         circlePoint = getFocusPoint();
         eraser.setColor(Color.RED);
         if(isCircle){
-            canvas.drawCircle(circlePoint.x - shiftCoord/2, circlePoint.y - shiftCoord/2, radius + shiftCoord, eraser);
+            canvas.drawCircle(circlePoint.x + shiftCoordX, circlePoint.y + shiftCoordY, radius + shiftRadius, eraser);
         }else if(isBrick){
             RectF rectF = new RectF(this.target.getRect().left, this.target.getRect().top, this.target.getRect().right, this.target.getRect().bottom);
             canvas.drawRect(rectF, eraser);

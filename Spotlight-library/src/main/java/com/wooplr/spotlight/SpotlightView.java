@@ -84,7 +84,7 @@ public class SpotlightView extends FrameLayout {
 
     private float yOfArrow = -1;
 
-    private int eraserMask = 0;
+    private int eraserMaskX = 0,eraserMaskY = 0,eraserMaskRadius = 0;
 
     /**
      * OverLay color
@@ -1522,9 +1522,11 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
 
-        public Builder setAdditionalMask(int size){
+        public Builder setAdditionalMask(int eraserMaskX,int eraserMaskY,int eraserMaskRadius){
 
-            spotlightView.eraserMask = size;
+            spotlightView.eraserMaskX = eraserMaskX;
+            spotlightView.eraserMaskY = eraserMaskY;
+            spotlightView.eraserMaskRadius = eraserMaskRadius;
             return this;
         }
 
@@ -1613,9 +1615,9 @@ public class SpotlightView extends FrameLayout {
                             spotlightView.padding);
                     if(!setMain){
                         setMain = true;
-                        spotlightView.setCircleShape(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMask));
+                        spotlightView.setCircleShape(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMaskX,spotlightView.eraserMaskY,spotlightView.eraserMaskRadius));
                     }
-                    spotlightView.circles.add(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMask));
+                    spotlightView.circles.add(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMaskX,spotlightView.eraserMaskY,spotlightView.eraserMaskRadius));
                 }
             }else if (spotlightView.rect != null){
 
@@ -1623,7 +1625,7 @@ public class SpotlightView extends FrameLayout {
                 Circle circle = new Circle(
                         spotlightView.targetView,
                         spotlightView.padding);
-                spotlightView.setCircleShape(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMask));
+                spotlightView.setCircleShape(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMaskX,spotlightView.eraserMaskY,spotlightView.eraserMaskRadius));
             }
             if (spotlightView.dismissOnBackPress) {
                 spotlightView.enableDismissOnBackPress();
