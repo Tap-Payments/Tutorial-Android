@@ -84,6 +84,7 @@ public class SpotlightView extends FrameLayout {
 
     private float yOfArrow = -1;
 
+    private int eraserMask = 0;
 
     /**
      * OverLay color
@@ -1521,6 +1522,12 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
 
+        public Builder setAdditionalMask(int size){
+
+            spotlightView.eraserMask = size;
+            return this;
+        }
+
         public Builder setArrowMarginStart(int start){
 
             spotlightView.arrowMargin = Utils.dpToPx(start);
@@ -1606,9 +1613,9 @@ public class SpotlightView extends FrameLayout {
                             spotlightView.padding);
                     if(!setMain){
                         setMain = true;
-                        spotlightView.setCircleShape(circle.setCircle(isCircle).seBrick(isBrick));
+                        spotlightView.setCircleShape(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMask));
                     }
-                    spotlightView.circles.add(circle.setCircle(isCircle).seBrick(isBrick));
+                    spotlightView.circles.add(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMask));
                 }
             }else if (spotlightView.rect != null){
 
@@ -1616,7 +1623,7 @@ public class SpotlightView extends FrameLayout {
                 Circle circle = new Circle(
                         spotlightView.targetView,
                         spotlightView.padding);
-                spotlightView.setCircleShape(circle.setCircle(isCircle).seBrick(isBrick));
+                spotlightView.setCircleShape(circle.setCircle(isCircle).setBrick(isBrick).setMask(spotlightView.eraserMask));
             }
             if (spotlightView.dismissOnBackPress) {
                 spotlightView.enableDismissOnBackPress();
