@@ -21,6 +21,7 @@ public class Circle {
     private Point circlePoint;
     private int padding = 20;
     public boolean isCircle = true;
+    public boolean isBrick = false;
 
     public Circle(Target target, int padding) {
         this.target = target;
@@ -33,6 +34,10 @@ public class Circle {
         isCircle = circle;
         return this;
     }
+    public  Circle seBrick(boolean brick){
+        isBrick = brick;
+        return this;
+    }
 
     public void draw(Canvas canvas, Paint eraser, int padding) {
         calculateRadius(padding);
@@ -40,6 +45,9 @@ public class Circle {
         eraser.setColor(Color.RED);
         if(isCircle){
             canvas.drawCircle(circlePoint.x, circlePoint.y, radius, eraser);
+        }else if(isBrick){
+            RectF rectF = new RectF(this.target.getRect().left, this.target.getRect().top, this.target.getRect().right, this.target.getRect().bottom);
+            canvas.drawRect(rectF, eraser);
         }else{
             RectF rectF = new RectF(this.target.getRect().left, this.target.getRect().top, this.target.getRect().right, this.target.getRect().bottom);
             canvas.drawRoundRect(rectF, Utils.dpToPx(40), Utils.dpToPx(40), eraser);

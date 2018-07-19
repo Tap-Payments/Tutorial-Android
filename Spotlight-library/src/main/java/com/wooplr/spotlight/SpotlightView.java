@@ -77,6 +77,13 @@ public class SpotlightView extends FrameLayout {
      */
     private boolean straigthVertical = true;
 
+    /**
+     * isStraigth
+     */
+    private boolean isBrick = false;
+
+    private float yOfArrow = -1;
+
 
     /**
      * OverLay color
@@ -811,7 +818,7 @@ public class SpotlightView extends FrameLayout {
                     startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
 
                     endPX = startPX;
-                    endPY = startPY - (int) (shiftValue * 4);
+                    endPY = startPY - Utils.dpToPx(30);
 
                     spotAnimPoints.add(new SpotAnimPoint(startPX,
                             startPY,
@@ -828,7 +835,7 @@ public class SpotlightView extends FrameLayout {
                 }else{//top
 
                         startPX = getMiddleOfViewX();
-                        startPY = getMiddleOfViewY() + Utils.dpToPx(50);
+                        startPY = getMiddleOfViewY() + Utils.dpToPx(30);
 
                         endPX = startPX;
                         endPY = startPY + (int) (1.5 * shiftValue);
@@ -839,9 +846,9 @@ public class SpotlightView extends FrameLayout {
                                 endPY
                         ));
 
-                        headingParams.leftMargin = gutter;
-                        headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
-                        //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
+                        headingParams.leftMargin = 0;
+                        headingParams.rightMargin = 0;
+                        headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
                         headingParams.topMargin = (int) endPY + spaceBelowLine;
                         headingParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
                         headingTv.setGravity(Gravity.CENTER);
@@ -863,6 +870,11 @@ public class SpotlightView extends FrameLayout {
                 Point size = new Point();
                 display.getSize(size);
                 deviceWidth = size.x;
+
+                if(yOfArrow != -1){
+
+                    middleY = yOfArrow;
+                }
 
 
                 int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -1354,6 +1366,7 @@ public class SpotlightView extends FrameLayout {
 
         private Activity activity;
         private boolean isCircle = true;
+        private boolean isBrick = true;
 
 
         public Builder(Activity activity) {
@@ -1363,6 +1376,11 @@ public class SpotlightView extends FrameLayout {
 
         public Builder setCircleView(boolean isCircle) {
             this.isCircle = isCircle;
+            return this;
+        }
+
+        public Builder setBrickView(boolean isBrick) {
+            this.isBrick = isBrick;
             return this;
         }
 
@@ -1509,6 +1527,12 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
 
+        public Builder setArrowYpx(float y){
+
+            spotlightView.yOfArrow = y;
+            return this;
+        }
+
         public Builder setStraigth(boolean straigth){
 
             spotlightView.isStraigth = straigth;
@@ -1582,9 +1606,9 @@ public class SpotlightView extends FrameLayout {
                             spotlightView.padding);
                     if(!setMain){
                         setMain = true;
-                        spotlightView.setCircleShape(circle.setCircle(isCircle));
+                        spotlightView.setCircleShape(circle.setCircle(isCircle).seBrick(isBrick));
                     }
-                    spotlightView.circles.add(circle.setCircle(isCircle));
+                    spotlightView.circles.add(circle.setCircle(isCircle).seBrick(isBrick));
                 }
             }else if (spotlightView.rect != null){
 
@@ -1592,7 +1616,7 @@ public class SpotlightView extends FrameLayout {
                 Circle circle = new Circle(
                         spotlightView.targetView,
                         spotlightView.padding);
-                spotlightView.setCircleShape(circle.setCircle(isCircle));
+                spotlightView.setCircleShape(circle.setCircle(isCircle).seBrick(isBrick));
             }
             if (spotlightView.dismissOnBackPress) {
                 spotlightView.enableDismissOnBackPress();
