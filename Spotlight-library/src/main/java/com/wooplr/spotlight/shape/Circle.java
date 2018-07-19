@@ -52,7 +52,7 @@ public class Circle {
         circlePoint = getFocusPoint();
         eraser.setColor(Color.RED);
         if(isCircle){
-            canvas.drawCircle(circlePoint.x - shiftCoord, circlePoint.y - shiftCoord, radius + shiftCoord, eraser);
+            canvas.drawCircle(circlePoint.x - shiftCoord/2, circlePoint.y - shiftCoord/2, radius + shiftCoord, eraser);
         }else if(isBrick){
             RectF rectF = new RectF(this.target.getRect().left, this.target.getRect().top, this.target.getRect().right, this.target.getRect().bottom);
             canvas.drawRect(rectF, eraser);
