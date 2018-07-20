@@ -77,6 +77,8 @@ public class SpotlightView extends FrameLayout {
      */
     private boolean straigthVertical = true;
 
+    private int heightOfView = -1;
+
     /**
      * isStraigth
      */
@@ -677,6 +679,10 @@ public class SpotlightView extends FrameLayout {
                 LayoutParams.WRAP_CONTENT);
         params.width = getWidth();
         params.height = getHeight();
+        if(heightOfView != -1){
+
+            params.height = heightOfView;
+        }
         addView(mView, params);
 
         //Textviews
@@ -1523,6 +1529,12 @@ public class SpotlightView extends FrameLayout {
             return this;
         }
 
+        public Builder setHeightOfView(int heightOfView){
+
+            spotlightView.heightOfView = heightOfView;
+            return this;
+        }
+
         public Builder setAdditionalMask(int eraserMaskX,int eraserMaskY,int eraserMaskRadius){
 
             spotlightView.eraserMaskX = eraserMaskX;
@@ -1530,6 +1542,7 @@ public class SpotlightView extends FrameLayout {
             spotlightView.eraserMaskRadius = eraserMaskRadius;
             return this;
         }
+
 
         public Builder setArrowMarginStart(int start){
 
