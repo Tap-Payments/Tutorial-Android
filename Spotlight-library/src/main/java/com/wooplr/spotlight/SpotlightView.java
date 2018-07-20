@@ -1049,11 +1049,11 @@ public class SpotlightView extends FrameLayout {
 
                     if (targetView.getPoint().x > screenWidth / 2) {//Right
 
-                        startPX = (targetView.getViewLeft()) - extraPaddingForArc - arrowMargin - radius;
+                        startPX = (targetView.getViewLeft()) - arrowMargin ;
                         startPY = getMiddleOfViewY();
 
 
-                        midlePX = startPX - shiftValue * 3;
+                        midlePX = startPX - shiftValue * 2;
                         midlePY = startPY;
 
                         endPX = midlePX;
@@ -1086,12 +1086,13 @@ public class SpotlightView extends FrameLayout {
 
 
 //                //TextViews
+                        //headingTv.setBackgroundColor(Color.RED);
                         headingParams.leftMargin = gutter;
-                        headingParams.rightMargin = screenWidth - (targetView.getViewRight() - targetView.getViewWidth() / 2) + extramargin;
+                        headingParams.rightMargin = screenWidth - targetView.getViewRight() + targetView.getViewWidth() / 2;
                         //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
                         headingParams.topMargin = (int) endPY + spaceBelowLine;
-                        headingParams.gravity = Gravity.TOP | Gravity.LEFT;
-                        headingTv.setGravity(Gravity.LEFT);
+                        headingParams.gravity = Gravity.TOP | Gravity.RIGHT;
+                        headingTv.setGravity(Gravity.RIGHT);
 
                         subHeadingParams.leftMargin = gutter;
                         subHeadingParams.rightMargin = screenWidth - targetView.getViewRight() + targetView.getViewWidth() / 2 + extramargin;
@@ -1600,6 +1601,11 @@ public class SpotlightView extends FrameLayout {
 
         public Builder isBackgroundFullScreen(boolean isBackgroundFullScreen) {
             spotlightView.isBackgroundFullScreen = isBackgroundFullScreen;
+            return this;
+        }
+
+        public Builder setExtraPaddingForArc(int paddingForArc) {
+            spotlightView.extraPaddingForArc = paddingForArc;
             return this;
         }
 
