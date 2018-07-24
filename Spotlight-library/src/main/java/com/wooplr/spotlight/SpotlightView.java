@@ -906,8 +906,8 @@ public class SpotlightView extends FrameLayout {
                     int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(deviceWidth - endPX), View.MeasureSpec.AT_MOST);
                     headingTv.measure(widthMeasureSpec, heightMeasureSpec);
 
-                    headingParams.leftMargin = Utils.dpToPx(30);
-                    headingParams.rightMargin = (int)(endPX + shiftValue/2);
+                    headingParams.leftMargin = gutter;
+                    headingParams.rightMargin = (int)(endPX + shiftValue);
                     headingParams.bottomMargin = 0;
                     headingParams.topMargin = (int)(startPY - headingTv.getMeasuredHeight()/2 -extramargin);
                     headingParams.gravity = Gravity.TOP | Gravity.RIGHT;
