@@ -906,13 +906,12 @@ public class SpotlightView extends FrameLayout {
                     int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(deviceWidth - endPX), View.MeasureSpec.AT_MOST);
                     headingTv.measure(widthMeasureSpec, heightMeasureSpec);
 
-                    headingParams.leftMargin = gutter;
-                    headingParams.rightMargin = (int)(endPX + shiftValue);
+                    headingParams.leftMargin = gutter*2;
+                    headingParams.rightMargin =  deviceWidth - (int)endPX + shiftValue/2;
                     headingParams.bottomMargin = 0;
                     headingParams.topMargin = (int)(startPY - headingTv.getMeasuredHeight()/2 -extramargin);
                     headingParams.gravity = Gravity.TOP | Gravity.RIGHT;
-                    headingTv.setGravity(Gravity.CENTER|Gravity.RIGHT);
-                    //headingTv.setBackgroundColor(Color.RED);
+                    headingTv.setGravity(Gravity.CENTER |Gravity.RIGHT);
                 } else {//left
 
                     startPY = middleY;
@@ -1035,12 +1034,12 @@ public class SpotlightView extends FrameLayout {
 
 
                         //TextViews
-                        headingParams.rightMargin = gutter;
-                        headingParams.leftMargin = targetView.getPoint().x;
-                        headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
+                        headingParams.rightMargin = (int)(gutter);
+                        headingParams.leftMargin = (int)endPX + Utils.dpToPx(5);
+                        headingParams.bottomMargin = screenHeight - (int) endPY ;
                         headingParams.topMargin = extramargin;
-                        headingParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-                        headingTv.setGravity(Gravity.RIGHT);
+                        headingParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
+                        headingTv.setGravity(Gravity.LEFT);
 
 
                         subHeadingParams.rightMargin = gutter;
