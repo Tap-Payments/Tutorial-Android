@@ -675,8 +675,8 @@ public class SpotlightView extends FrameLayout {
 
 
         View mView = new View(activity);
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
         params.width = getWidth();
         params.height = getHeight();
         if(heightOfView != -1){
