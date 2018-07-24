@@ -834,8 +834,8 @@ public class SpotlightView extends FrameLayout {
                             endPY
                     ));
 
-                    headingParams.leftMargin = 0;
-                    headingParams.rightMargin = 0;
+                    headingParams.leftMargin = 10;
+                    headingParams.rightMargin = 10;
                     headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
                     headingParams.topMargin = extramargin;
                     headingParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
@@ -1035,8 +1035,8 @@ public class SpotlightView extends FrameLayout {
 
 
                         //TextViews
-                        headingParams.rightMargin = 10;
-                        headingParams.leftMargin = 0;
+                        headingParams.rightMargin = gutter;
+                        headingParams.leftMargin = targetView.getPoint().x;
                         headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
                         headingParams.topMargin = extramargin;
                         headingParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
