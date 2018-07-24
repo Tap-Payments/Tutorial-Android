@@ -843,7 +843,7 @@ public class SpotlightView extends FrameLayout {
                 }else{//top
 
                         startPX = getMiddleOfViewX();
-                        startPY = getMiddleOfViewY() + Utils.dpToPx(30);
+                        startPY = targetView.getPoint().y + Utils.dpToPx(20);
 
                         endPX = startPX;
                         endPY = startPY + (int) (1.5 * shiftValue);
@@ -1035,7 +1035,7 @@ public class SpotlightView extends FrameLayout {
 
 
                         //TextViews
-                        headingParams.rightMargin = 0;
+                        headingParams.rightMargin = 10;
                         headingParams.leftMargin = 0;
                         headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
                         headingParams.topMargin = extramargin;
@@ -1116,7 +1116,7 @@ public class SpotlightView extends FrameLayout {
                         startPY = getMiddleOfViewY();
 
 
-                        midlePX = startPX + shiftValue * 3;
+                        midlePX = startPX + shiftValue * 2;
                         midlePY = startPY;
 
                         endPX = midlePX;
