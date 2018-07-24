@@ -299,7 +299,8 @@ public class SpotlightView extends FrameLayout {
 
         this.canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         if (backgroundBitmap != null) {
-            this.canvas.drawBitmap(backgroundBitmap, 0, topPosition, null);
+            this.bitmap = backgroundBitmap;
+            //ßßthis.canvas.drawBitmap(backgroundBitmap, 0, topPosition, null);
         } else {
             this.canvas.drawColor(maskColor);
         }
