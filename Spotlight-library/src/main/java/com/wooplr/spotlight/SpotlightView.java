@@ -288,6 +288,10 @@ public class SpotlightView extends FrameLayout {
 
         if (bitmap == null || canvas == null) {
             if (bitmap != null) bitmap.recycle();
+            if(heightOfView != -1){
+
+                height = heightOfView;
+            }
 
             bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             this.canvas = new Canvas(bitmap);
@@ -679,10 +683,6 @@ public class SpotlightView extends FrameLayout {
                 LayoutParams.MATCH_PARENT);
         params.width = getWidth();
         params.height = getHeight();
-        if(heightOfView != -1){
-
-            params.height = heightOfView;
-        }
         addView(mView, params);
 
         //Textviews
