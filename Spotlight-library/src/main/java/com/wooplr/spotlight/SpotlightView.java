@@ -906,7 +906,7 @@ public class SpotlightView extends FrameLayout {
                     int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(deviceWidth - endPX), View.MeasureSpec.AT_MOST);
                     headingTv.measure(widthMeasureSpec, heightMeasureSpec);
 
-                    headingParams.leftMargin = 0;
+                    headingParams.leftMargin = Utils.dpToPx(30);
                     headingParams.rightMargin = (int)(endPX + shiftValue/2);
                     headingParams.bottomMargin = 0;
                     headingParams.topMargin = (int)(startPY - headingTv.getMeasuredHeight()/2 -extramargin);
@@ -1094,7 +1094,7 @@ public class SpotlightView extends FrameLayout {
 
 //                //TextViews
                         //headingTv.setBackgroundColor(Color.RED);
-                        headingParams.leftMargin = gutter;
+                        headingParams.leftMargin = gutter*2;
                         headingParams.rightMargin = screenWidth - targetView.getViewRight() + targetView.getViewWidth() / 2;
                         //headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
                         headingParams.topMargin = (int) endPY + spaceBelowLine;
