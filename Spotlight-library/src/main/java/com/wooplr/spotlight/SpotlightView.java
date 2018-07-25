@@ -844,7 +844,7 @@ public class SpotlightView extends FrameLayout {
                 }else{//top
 
                         startPX = getMiddleOfViewX();
-                        startPY = targetView.getPoint().y + Utils.dpToPx(20);
+                        startPY = targetView.getViewBottom() + padding;
 
                         endPX = startPX;
                         endPY = startPY + (int) (1.5 * shiftValue);
