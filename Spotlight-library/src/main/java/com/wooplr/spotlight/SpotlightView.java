@@ -76,6 +76,7 @@ public class SpotlightView extends FrameLayout {
      * isStraigth
      */
     private boolean straigthVertical = true;
+    private boolean straigthVerticalFromTopDirection = false;
 
     private int heightOfView = -1;
 
@@ -820,10 +821,10 @@ public class SpotlightView extends FrameLayout {
 
             if(straigthVertical){
 
-                if (targetView.getPoint().y > screenHeight / 2){ //bottom
+                if (targetView.getPoint().y > screenHeight / 2 || straigthVerticalFromTopDirection){ //bottom
 
                     startPX = getMiddleOfViewX();
-                    startPY = targetView.getPoint().y - (extraPaddingForArc) - arrowMargin;
+                    startPY = targetView.getViewTop() - (extraPaddingForArc) - arrowMargin;
 
                     endPX = startPX;
                     endPY = startPY - Utils.dpToPx(30);
@@ -834,8 +835,8 @@ public class SpotlightView extends FrameLayout {
                             endPY
                     ));
 
-                    headingParams.leftMargin = 10;
-                    headingParams.rightMargin = 10;
+                    headingParams.leftMargin = gutter;
+                    headingParams.rightMargin = gutter;
                     headingParams.bottomMargin = screenHeight - (int) endPY + spaceAboveLine;
                     headingParams.topMargin = extramargin;
                     headingParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
@@ -854,8 +855,8 @@ public class SpotlightView extends FrameLayout {
                                 endPY
                         ));
 
-                        headingParams.leftMargin = 0;
-                        headingParams.rightMargin = 0;
+                        headingParams.leftMargin = gutter;
+                        headingParams.rightMargin = gutter;
                         headingParams.bottomMargin = screenHeight - ((screenHeight - targetView.getViewBottom()) / 2 + targetView.getViewBottom()) + spaceAboveLine;
                         headingParams.topMargin = (int) endPY + spaceBelowLine;
                         headingParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
@@ -1611,6 +1612,14 @@ public class SpotlightView extends FrameLayout {
             spotlightView.isArabic = isArabic;
             return this;
         }
+
+        public Builder setStraigthVerticalFromTopDirection(boolean straigthVerticalFromTopDirection){
+
+            spotlightView.straigthVerticalFromTopDirection = straigthVerticalFromTopDirection;
+            return this;
+        }
+
+
 
         public Builder isBackgroundFullScreen(boolean isBackgroundFullScreen) {
             spotlightView.isBackgroundFullScreen = isBackgroundFullScreen;
